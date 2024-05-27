@@ -27,16 +27,24 @@ function getNeighborhood(x, y, lato) {
     //e=destra, positivo
     //n=su, positivo
 
-    let w, e, s, n;
-    w = null;
-    e = null;
-    s = null;
+    let n, ne, e, se, s, sw, w, nw;
     n = null;
+    ne = null;
+    e = null;
+    se = null;
+    s = null;
+    sw = null;
+    w = null;
+    nw = null;
     if (x != 0) {
         w = [x - 1, y];
+        sw = [x - 1, y - 1];
+        nw = [x - 1, y + 1];
     }
     if (x != lato - 1) {
         e = [x + 1, y];
+        ne = [x + 1, y + 1];
+        se = [x + 1, y - 1];
     }
     if (y != 0) {
         s = [x, y - 1];
@@ -44,7 +52,7 @@ function getNeighborhood(x, y, lato) {
     if (y != lato - 1) {
         n = [x, y + 1];
     }
-    return [w, e, s, n]
+    return [n, ne, e, se, s, sw, w, nw]
 }
 
 function isLive(cell, matrix) {
@@ -57,24 +65,33 @@ function isLive(cell, matrix) {
 }
 
 export function simulation(x, y, matrix, lato) {
-    const [w, e, s, n] = getNeighborhood(x, y, lato);
+    const [n, ne, e, se, s, sw, w, nw] = getNeighborhood(x, y, lato);
     const alive = isLive([x, y], matrix);
     const wAlive = isLive(w, matrix);
     const eAlive = isLive(e, matrix);
     const sAlive = isLive(s, matrix);
     const nAlive = isLive(n, matrix);
+    const neAlive = isLive(ne, matrix);
+    const nwAlive = isLive(nw, matrix);
+    const seAlive = isLive(se, matrix);
+    const swAlive = isLive(sw, matrix);
     let numberAlive = 0;
     if (wAlive) numberAlive++;
     if (eAlive) numberAlive++;
     if (sAlive) numberAlive++;
     if (nAlive) numberAlive++;
-    if (alive) numberAlive++;
+    if (neAlive) numberAlive++;
+    if (nwAlive) numberAlive++;
+    if (seAlive) numberAlive++;
+    if (swAlive) numberAlive++;
+    // if (alive) numberAlive++;
     //false muore
     //true viva e Vegeta
     if (alive && numberAlive < 2) return false;
     if (alive && (numberAlive == 3 || numberAlive == 2)) return true;
     if (alive && numberAlive > 3) return false;
     if (!alive && numberAlive == 3) return true;
+    return false;
 }
 // Any live cell with fewer than two live neighbors dies as if caused by underpopulation.
 // Any live cell with two or three live neighbors lives on to the next generation.
@@ -84,4 +101,15 @@ export function simulation(x, y, matrix, lato) {
 export function currentPoint(matrix, index, lato) {
 
     return matrix[index % lato][Math.floor(index / lato)];
+}
+
+export function runSimulation(lato, Matrix) {
+    let newMatrix = []
+    for (let x = 0; x < lato; x++) {
+        newMatrix[x] = [];
+        for (let y = 0; y < lato; y++) {
+            newMatrix[x][y] = simulation(x, y, Matrix, lato);
+        }
+    }
+    return newMatrix
 }

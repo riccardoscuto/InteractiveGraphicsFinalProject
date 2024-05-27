@@ -5,15 +5,18 @@ import { OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import Loader from '../components/Loader';
 import Cube from '../models/Cube';
-import { currentPoint, generationMatrix, generationPosition, simulation } from '../functions/cellarAutomata2D';
+import { currentPoint, generationMatrix, generationPosition, runSimulation, simulation } from '../functions/cellarAutomata2D';
 import { useInterval } from '../hook/useInterval';
 
 
 const lato = 9;
 const rendered = generationMatrix(lato);
-rendered[4][5]=true
-rendered[4][6]=true
-rendered[4][7]=true
+rendered[2][8] = true
+rendered[3][7] = true
+rendered[1][6] = true
+rendered[2][6] = true
+rendered[3][6] = true
+
 
 const positions = generationPosition(lato);
 
@@ -24,20 +27,12 @@ const Home = () => {
     const [LastFrame, setLastFrame] = useState(Date.now())
     useInterval(() => {
         console.log("ciao")
-        // if (Date.now()-LastFrame>1000) {
-          //  if(false){
-            let newMatrix = []
-            for (let x = 0; x < lato; x++) {
-                newMatrix[x] = [];
-                for (let y = 0; y < lato; y++) {
-                    newMatrix[x][y] = simulation(x, y, Matrix, lato);
-                }
-            }
-            setMatrix(newMatrix);
-            console.log(newMatrix)
-         //   setLastFrame(Date.now());
-     //   }
-    }, 10000)
+        const newMatrix = runSimulation(lato, Matrix);
+        setMatrix(newMatrix) 
+        console.log(newMatrix)
+
+
+    }, 500)
 
 
 
@@ -64,7 +59,7 @@ const Home = () => {
                     {darkMode ? null : <pointLight />}
                     {darkMode ? null : <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />}
                     {positions.map((position, index) => (
-                        <Cube key={index} position={position} color={colors[index]} darkMode={darkMode} isRendering={currentPoint(Matrix,index,lato)} />
+                        <Cube key={index} position={position} color={colors[index]} darkMode={darkMode} isRendering={!currentPoint(Matrix, index, lato)} />
                     ))}
                     <OrbitControls />
                     <EffectComposer>
