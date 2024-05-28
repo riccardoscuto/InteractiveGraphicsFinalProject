@@ -31,15 +31,19 @@ const rendered = generationMatrix(lato);
 
 const Home = () => {
     const [darkMode, setDarkMode] = useState(false);
+    const [cellShadingMode, setCellShadingMode] = useState(false);
+    const [wireframeMode, setWireframeMode] = useState(false);
     const toggleDarkMode = () => setDarkMode(!darkMode);
-    const [Lato, setLato] = useState(3)
-    const [Positions, setPositions] = useState(generationPosition(Lato))
+    const toggleCellShadingMode = () => setCellShadingMode(!cellShadingMode);
+    const toggleWireframeMode = () => setWireframeMode(!wireframeMode);
+    const [Lato, setLato] = useState(4);
+    const [Positions, setPositions] = useState(generationPosition(Lato));
     const [Matrix, setMatrix] = useState(generationMatrix(Lato));
-    const [Running, setRunning] = useState(false)
-    const [Birth, setBirth] = useState(3)
-    const [Underpopulated, setUnderpopulated] = useState(2)
-    const [Stable, setStable] = useState(2)
-    const [Overpulated, setOverpulated] = useState(3)
+    const [Running, setRunning] = useState(false);
+    const [Birth, setBirth] = useState(3);
+    const [Underpopulated, setUnderpopulated] = useState(2);
+    const [Stable, setStable] = useState(2);
+    const [Overpulated, setOverpulated] = useState(3);
     useInterval(() => {
         if (Running) {
             console.log("ciao")
@@ -92,6 +96,12 @@ const Home = () => {
             <> <div style={{ position: 'absolute', zIndex: 2 }}>
                     <button onClick={toggleDarkMode}>
                         {darkMode ? "Light Mode" : "Dark Mode"}
+                    </button>
+                    <button onClick={toggleCellShadingMode}>
+                        {cellShadingMode ? "Disable Cell Shading" : "Enable Cell Shading"}
+                    </button>
+                    <button onClick={toggleWireframeMode}>
+                        {wireframeMode ? "Disable Wireframe" : "Enable Wireframe"}
                     </button>
                     <button onClick={() => { setRunning(!Running) }}>
                         {Running ? "Pause" : "Start"}
@@ -147,7 +157,7 @@ const Home = () => {
                     </select>
                 </div>
                 <Canvas
-                    camera={{ position: [0, 0, 10], near: 0.1, far: 1000 }}
+                    camera={{ position: [35, 10, 10], near: 0.1, far: 1000 }}
                     style={{ width: "100vw", height: "100vh", zIndex: "1", background: darkMode ? "black" : "white" }}
                 >
                     <Suspense fallback={<Loader />}>
@@ -157,7 +167,8 @@ const Home = () => {
                         {darkMode ? null : <pointLight />}
                         {darkMode ? null : <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />}
                         {Positions.length>0 && Lato && Matrix.length>0 && Positions.flat(1).map((position, index) => (
-                            <Cube key={index} position={position} color={colors[index]} darkMode={darkMode} isRendering={currentPoint(Matrix, index, Lato)} />
+                            <Cube key={index} position={position} color={colors[index]} darkMode={darkMode} isRendering={currentPoint(Matrix, index, Lato)}                                 cellShadingMode={cellShadingMode} 
+                            wireframeMode={wireframeMode} />
                         ))}
                         {/* isRendering={!secondDimension.currentPoint(Matrix, index, lato)} */}
                         <OrbitControls />
