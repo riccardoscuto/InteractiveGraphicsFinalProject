@@ -31,7 +31,8 @@ const Cube = (props) => {
     }
 
     return (
-        <mesh position={props.position}>
+        <mesh position={props.position}> 
+        {/* visibile={props.isRendering} */}
             <primitive object={cube} />
         </mesh>
     );

@@ -6,25 +6,40 @@ export const generationPosition = (lato) => {
         for (let i = 0; i < lato * lato; i++) {
             if (i % lato == 0) {
                 currentRow++;
-
             }
-            toRet[j].push([i % lato * 2.1, currentRow * 2.1, j * 2.1])
-
+            toRet[j].push([(i % lato) * 2, j * 2, currentRow * 2]);
         }
     }
     return toRet;
-}
+};
 
 export const generationMatrix = (lato) => {
-    const toRet = []
-    for (let j = 0; j < lato; j++) {
-        toRet[j] = []
-        for (let i = 0; i < lato; i++) {
-            toRet[j][i] = new Array(lato + 1).fill(false);
+    const newMatrix = [];
+    for (let x = 0; x < lato; x++) {
+        newMatrix[x] = [];
+        for (let y = 0; y < lato; y++) {
+            newMatrix[x][y] = [];
+            for (let z = 0; z < lato; z++) {
+                newMatrix[x][y][z] = 0;
+            }
         }
     }
-    return toRet;
-}
+    return newMatrix;
+};
+
+export const generationRandomMatrix = (lato) => {
+    const newMatrix = [];
+    for (let x = 0; x < lato; x++) {
+        newMatrix[x] = [];
+        for (let y = 0; y < lato; y++) {
+            newMatrix[x][y] = [];
+            for (let z = 0; z < lato; z++) {
+                newMatrix[x][y][z] = Math.random() < 0.5 ? 1 : 0;
+            }
+        }
+    }
+    return newMatrix;
+};
 
 function getNeighborhood(x, y, z, lato) {
     let e = null
@@ -160,10 +175,26 @@ export function simulationCustomRule(x, y, z, matrix, lato, underpopulated, stab
         }
     }
     const alive = isLive([x, y, z], matrix)
-    if (alive && numberAlive < underpopulated) return false;
-    if (alive && (numberAlive == stable || numberAlive == birth)) return true;
-    if (alive && numberAlive > overpopulated) return false;
-    if (!alive && numberAlive == birth) return true;
+    if (Array.isArray(underpopulated)) {
+        if (alive && numberAlive > underpopulated[0] && numberAlive < underpopulated[1]) return false;
+    } else {
+        if (alive && numberAlive < underpopulated) return false;
+    }
+    if (Array.isArray(stable)) {
+        if (alive && numberAlive > stable[0] && numberAlive < stable[1]) return true;
+    } else {
+        if (alive && (numberAlive == stable)) return true;
+    }
+    if (Array.isArray(birth)) {
+        if (numberAlive > birth[0] && numberAlive < birth[1]) return true;
+    } else {
+        if ((numberAlive == birth)) return true;
+    }
+    if (Array.isArray(overpopulated)) {
+        if (alive && numberAlive > overpopulated[0] && numberAlive < overpopulated[1]) return false;
+    } else {
+        if (alive && numberAlive > overpopulated) return false;
+    }
     return false;
 }
 export function runSimulationCustom(lato, Matrix, underpopulated, stable, birth, overpopulated) {

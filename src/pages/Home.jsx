@@ -7,35 +7,16 @@ import Loader from '../components/Loader';
 import Cube from '../models/Cube';
 import * as secondDimension from '../functions/cellarAutomata2D';
 import { useInterval } from '../hook/useInterval';
-import { currentPoint, generationMatrix, generationPosition, runSimulation, runSimulationCustom } from '../functions/cellarAutomata3D';
-
-
+import { currentPoint, generationMatrix, generationPosition, runSimulation, runSimulationCustom, generationRandomMatrix } from '../functions/cellarAutomata3D';
+import Rules from "../config/rules.json"
 const lato = 20;
 const rendered = generationMatrix(lato);
-// rendered[1][1][1] = true
-// rendered[1][2][1] = true
-// rendered[1][3][1] = true
-// rendered[1][2][2] = true
-// rendered[1][2][0] = true
-// rendered[3][5][4] = true
-// rendered[3][6][3] = true
-// rendered[4][3][4] = true
-
-// // rendered[3][7] = true
-// // rendered[1][6] = true
-// // rendered[2][6] = true
-// // rendered[3][6] = true
-
-
-// const positions = generationPosition(lato);
 
 const Home = () => {
     const [darkMode, setDarkMode] = useState(false);
     const [cellShadingMode, setCellShadingMode] = useState(false);
     const [wireframeMode, setWireframeMode] = useState(false);
-    const toggleDarkMode = () => setDarkMode(!darkMode);
-    const toggleCellShadingMode = () => setCellShadingMode(!cellShadingMode);
-    const toggleWireframeMode = () => setWireframeMode(!wireframeMode);
+    const [matrixType, setMatrixType] = useState("fixed"); // fixed or random
     const [Lato, setLato] = useState(4);
     const [Positions, setPositions] = useState(generationPosition(Lato));
     const [Matrix, setMatrix] = useState(generationMatrix(Lato));
@@ -43,118 +24,154 @@ const Home = () => {
     const [Birth, setBirth] = useState(3);
     const [Underpopulated, setUnderpopulated] = useState(2);
     const [Stable, setStable] = useState(2);
-    const [Overpulated, setOverpulated] = useState(3);
+    const [Overpopulated, setOverpopulated] = useState(3);
+
     useInterval(() => {
         if (Running) {
             console.log("ciao")
-            const newMatrix = runSimulationCustom(Lato, Matrix, Underpopulated, Stable, Birth, Overpulated);
+            const newMatrix = runSimulationCustom(Lato, Matrix, Underpopulated, Stable, Birth, Overpopulated);
             setMatrix(newMatrix)
-            // console.log(newMatrix)
         }
+    },100);
 
-    }, 100)
     useEffect(() => {
+        const newPosition = generationPosition(Lato);
+        const newMatrix = matrixType === "fixed" ? generateFixedMatrix(Lato) : generationRandomMatrix(Lato);
+        translateM(Matrix, newMatrix);
+        setMatrix(newMatrix);
+        setPositions(newPosition);
+    }, [Lato, matrixType]);
 
-        const newPosition = generationPosition(Lato)
-        const newMatrix = []
-        for (let x = 0; x < Lato; x++) {
-            newMatrix[x] = []
-            for (let y = 0; y < Lato; y++) {
-                newMatrix[x][y] = []
-                for (let z = 0; z < Lato; z++) {
-                    newMatrix[x][y][z] = Math.floor(Math.random() * 10) % 6 == 0;
+    const translateM = (old, newM) => {
+        const l = old.length < newM.length ? old.length : newM.length;
+        for (let x = 0; x < l; x++) {
+            for (let y = 0; y < l; y++) {
+                for (let z = 0; z < l; z++) {
+                    newM[x][y][z] = old[x][y][z];
                 }
             }
         }
-        console.log("SONO BONACINI", newMatrix)
-        setMatrix(newMatrix)
-        console.log("SONO POSIZIONEAT" ,newPosition)
-        setPositions(newPosition)
-
-
-
-    }, [Lato])
-
-
+    }
     const handleChange = (e) => {
         console.log(e.target.value)
-        const [u, s, b, o] = e.target.value.split(",");
-        setUnderpopulated(Number(u));
-        setStable(Number(s));
-        setBirth(Number(b));
-        setOverpulated(Number(o));
+        //const [l, u, s, b, o] = e.target.value.split(",");
+        const { birth, lato, overpopulated, spawn, stable, underpopulated } = Rules[e.target.value];
+        setLato(lato);
+        setUnderpopulated(Number(underpopulated));
+        setStable(Number(stable));
+        setBirth(Number(birth));
+        setOverpopulated(Number(overpopulated));
+        let newMatrix = generateFixedMatrix(lato);
+        for (let [x, y, z] of spawn) {
+            newMatrix[x][y][z] = true;
+        }
+        setMatrix(newMatrix)
     }
 
-
+    const generateFixedMatrix = (lato) => {
+        const newMatrix = [];
+        for (let x = 0; x < lato; x++) {
+            newMatrix[x] = [];
+            for (let y = 0; y < lato; y++) {
+                newMatrix[x][y] = [];
+                for (let z = 0; z < lato; z++) {
+                    newMatrix[x][y][z] = false;
+                }
+            }
+        }
+        return newMatrix;
+    }
 
     const colors = [
         "red", "white", "blue", "yellow", "#324e2a",
-        "#1b3644", "#3d0079", "#ffbf6e", "brown", "cyan"
+        "#1b3644", "#3d0079", "#ffbf6e", "brown", "cyan",
     ];
+
     if (Lato && Matrix.length > 0)
         return (
-            <> <div style={{ position: 'absolute', zIndex: 2 }}>
-                    <button onClick={toggleDarkMode}>
-                        {darkMode ? "Light Mode" : "Dark Mode"}
-                    </button>
-                    <button onClick={toggleCellShadingMode}>
-                        {cellShadingMode ? "Disable Cell Shading" : "Enable Cell Shading"}
-                    </button>
-                    <button onClick={toggleWireframeMode}>
-                        {wireframeMode ? "Disable Wireframe" : "Enable Wireframe"}
-                    </button>
-                    <button onClick={() => { setRunning(!Running) }}>
-                        {Running ? "Pause" : "Start"}
-                    </button>
-                    <button onClick={() => { setLato(Lato + 1) }}>
-                        Lato: {Lato}
-                    </button>
-                    <label>
-                        Underpopulate: {Underpopulated}
-                        <input 
-                            type="range" 
-                            min="0" 
-                            max="10" 
-                            value={Underpopulated} 
-                            onChange={(e) => setUnderpopulated(Number(e.target.value))} 
-                        />
-                    </label>
-                    <label>
-                        Overpopulated: {Overpulated}
-                        <input 
-                            type="range" 
-                            min="0" 
-                            max="10" 
-                            value={Overpulated} 
-                            onChange={(e) => setOverpulated(Number(e.target.value))} 
-                        />
-                    </label>
-                    <label>
-                        Stable: {Stable}
-                        <input 
-                            type="range" 
-                            min="0" 
-                            max="10" 
-                            value={Stable} 
-                            onChange={(e) => setStable(Number(e.target.value))} 
-                        />
-                    </label>
-                    <label>
-                        Birth: {Birth}
-                        <input 
-                            type="range" 
-                            min="0" 
-                            max="10" 
-                            value={Birth} 
-                            onChange={(e) => setBirth(Number(e.target.value))} 
-                        />
-                    </label>
-                    <select defaultValue={undefined} onChange={handleChange}>
-                        <option value={[]}></option>
-                        <option value={[2, 4, 2, 4]}>Rule 1: u2/o4/s2/b4</option>
-                        <option value={[1, 1, 1, 1]}>Rule 2: u1/o1/s1/b1</option>
-                        <option value={[4, 5, 4, 4]}>Rule 3: u4/o5/s4/b4</option>
-                    </select>
+            <>
+                <div style={{ position: 'absolute', zIndex: 2 }}>
+                    <div>
+                        <button onClick={() => setDarkMode(!darkMode)}>
+                            {darkMode ? "Light Mode" : "Dark Mode"}
+                        </button>
+                        <button onClick={() => setCellShadingMode(!cellShadingMode)}>
+                            {cellShadingMode ? "Disable Cell Shading" : "Enable Cell Shading"}
+                        </button>
+                        <button onClick={() => setWireframeMode(!wireframeMode)}>
+                            {wireframeMode ? "Disable Wireframe" : "Enable Wireframe"}
+                        </button>
+                        <button onClick={() => { setRunning(!Running) }}>
+                            {Running ? "Pause" : "Start"}
+                        </button>
+                    </div>
+                    <div>
+                        <label>
+                            Matrix Type:
+                            <select value={matrixType} onChange={(e) => setMatrixType(e.target.value)}>
+                                <option value="fixed">Fixed</option>
+                                <option value="random">Random</option>
+                            </select>
+                        </label>
+                        <label>
+                            Lato: {Lato}
+                            <input
+                                type="range"
+                                min="1"
+                                max="30"
+                                value={Lato}
+                                onChange={(e) => setLato(Number(e.target.value))}
+                            />
+                        </label>
+                        <label>
+                            Underpopulate: {Underpopulated}
+                            <input
+                                type="range"
+                                min="0"
+                                max="10"
+                                value={Underpopulated}
+                                onChange={(e) => setUnderpopulated(Number(e.target.value))}
+                            />
+                        </label>
+                        <label>
+                            Overpopulated: {Overpopulated}
+                            <input
+                                type="range"
+                                min="0"
+                                max="10"
+                                value={Overpopulated}
+                                onChange={(e) => setOverpopulated(Number(e.target.value))}
+                            />
+                        </label>
+                        <label>
+                            Stable: {Stable}
+                            <input
+                                type="range"
+                                min="0"
+                                max="10"
+                                value={Stable}
+                                onChange={(e) => setStable(Number(e.target.value))}
+                            />
+                        </label>
+                        <label>
+                            Birth: {Birth}
+                            <input
+                                type="range"
+                                min="0"
+                                max="10"
+                                value={Birth}
+                                onChange={(e) => setBirth(Number(e.target.value))}
+                            />
+                        </label>
+                        <select defaultValue={undefined} onChange={handleChange}>
+                            <option value={[]} key={-1}></option>
+                            {Rules.map((element, index) => {
+                                return <option value={index} key={index} >{element.text}</option>
+
+                            })}
+
+                        </select>
+                    </div>
                 </div>
                 <Canvas
                     camera={{ position: [35, 10, 10], near: 0.1, far: 1000 }}
@@ -166,11 +183,10 @@ const Home = () => {
                         {darkMode ? null : <spotLight />}
                         {darkMode ? null : <pointLight />}
                         {darkMode ? null : <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />}
-                        {Positions.length>0 && Lato && Matrix.length>0 && Positions.flat(1).map((position, index) => (
-                            <Cube key={index} position={position} color={colors[index]} darkMode={darkMode} isRendering={currentPoint(Matrix, index, Lato)}                                 cellShadingMode={cellShadingMode} 
-                            wireframeMode={wireframeMode} />
+                        {Positions.length > 0 && Lato && Matrix.length > 0 && Positions.flat(1).map((position, index) => (
+                            <Cube key={index} position={position} color={colors[index]} darkMode={darkMode} isRendering={currentPoint(Matrix, index, Lato)} cellShadingMode={cellShadingMode}
+                                wireframeMode={wireframeMode} />
                         ))}
-                        {/* isRendering={!secondDimension.currentPoint(Matrix, index, lato)} */}
                         <OrbitControls />
                         <EffectComposer>
                             <Bloom
