@@ -32,7 +32,7 @@ const rendered = generationMatrix(lato);
 const Home = () => {
     const [darkMode, setDarkMode] = useState(false);
     const toggleDarkMode = () => setDarkMode(!darkMode);
-    const [Lato, setLato] = useState(2)
+    const [Lato, setLato] = useState(3)
     const [Positions, setPositions] = useState(generationPosition(Lato))
     const [Matrix, setMatrix] = useState(generationMatrix(Lato));
     const [Running, setRunning] = useState(false)
@@ -89,46 +89,63 @@ const Home = () => {
     ];
     if (Lato && Matrix.length > 0)
         return (
-            <><div style={{ position: 'absolute', zIndex: 2 }}>
-
-                <button onClick={toggleDarkMode} >
-                    {darkMode ? "Light Mode" : "Dark Mode"}
-                </button>
-                <button onClick={() => { runSimulationCustom(lato, Matrix, Underpopulated, Stable, Birth, Overpulated) }} >
-                    Step
-                </button>
-                <button onClick={() => { setUnderpopulated(Underpopulated + 1) }}>
-                    Underpopulate:{Underpopulated}
-                </button>
-                <button onClick={() => { setOverpulated(Overpulated + 1) }} >
-                    Overpopulated:{Overpulated}
-                </button>
-                <button onClick={() => { setStable(Stable + 1) }}>
-                    Stable:{Stable}
-                </button>
-                <button onClick={() => { setBirth(Birth + 1) }}>
-                    Birth:{Birth}
-                </button>
-                <button onClick={() => { setLato(Lato + 1) }} >
-                    Lato:{Lato}
-                </button>
-                <button onClick={() => { setRunning(!Running) }}>
-                    {Running ? "Pause" : "Start"}
-                </button>
-                <select defaultValue={undefined} onChange={handleChange}>
-                    <option value={[]}>
-                    </option>
-                    <option value={[2, 4, 2, 4]}>
-                        Rule 1:u2/o4/s2/b4
-                    </option>
-                    <option value={[1, 1, 1, 1]}>
-                        Rule 2:u1/o1/s1/b1
-                    </option>
-                    <option value={[4, 5, 4, 4]}>
-                        Rule 2:u4/o5/s4/b4
-                    </option>
-                </select>
-            </div>
+            <> <div style={{ position: 'absolute', zIndex: 2 }}>
+                    <button onClick={toggleDarkMode}>
+                        {darkMode ? "Light Mode" : "Dark Mode"}
+                    </button>
+                    <button onClick={() => { setRunning(!Running) }}>
+                        {Running ? "Pause" : "Start"}
+                    </button>
+                    <button onClick={() => { setLato(Lato + 1) }}>
+                        Lato: {Lato}
+                    </button>
+                    <label>
+                        Underpopulate: {Underpopulated}
+                        <input 
+                            type="range" 
+                            min="0" 
+                            max="10" 
+                            value={Underpopulated} 
+                            onChange={(e) => setUnderpopulated(Number(e.target.value))} 
+                        />
+                    </label>
+                    <label>
+                        Overpopulated: {Overpulated}
+                        <input 
+                            type="range" 
+                            min="0" 
+                            max="10" 
+                            value={Overpulated} 
+                            onChange={(e) => setOverpulated(Number(e.target.value))} 
+                        />
+                    </label>
+                    <label>
+                        Stable: {Stable}
+                        <input 
+                            type="range" 
+                            min="0" 
+                            max="10" 
+                            value={Stable} 
+                            onChange={(e) => setStable(Number(e.target.value))} 
+                        />
+                    </label>
+                    <label>
+                        Birth: {Birth}
+                        <input 
+                            type="range" 
+                            min="0" 
+                            max="10" 
+                            value={Birth} 
+                            onChange={(e) => setBirth(Number(e.target.value))} 
+                        />
+                    </label>
+                    <select defaultValue={undefined} onChange={handleChange}>
+                        <option value={[]}></option>
+                        <option value={[2, 4, 2, 4]}>Rule 1: u2/o4/s2/b4</option>
+                        <option value={[1, 1, 1, 1]}>Rule 2: u1/o1/s1/b1</option>
+                        <option value={[4, 5, 4, 4]}>Rule 3: u4/o5/s4/b4</option>
+                    </select>
+                </div>
                 <Canvas
                     camera={{ position: [0, 0, 10], near: 0.1, far: 1000 }}
                     style={{ width: "100vw", height: "100vh", zIndex: "1", background: darkMode ? "black" : "white" }}
