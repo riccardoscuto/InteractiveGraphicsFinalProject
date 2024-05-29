@@ -13,8 +13,7 @@ const Cube = (props) => {
                 if (props.wireframeMode) {
                     const wireframeGeometry = new WireframeGeometry(child.geometry);
                     child.material = new MeshBasicMaterial({ color: props.color });
-                    const wireframe = new LineSegments(wireframeGeometry, new MeshBasicMaterial({ color: '#000000' ,    wireframe: true
-                }));
+                    const wireframe = new LineSegments(wireframeGeometry, new MeshBasicMaterial({ color: '#000000' , wireframe: true }));
                     child.add(wireframe);
                 } else {
                     child.material = props.darkMode
@@ -32,7 +31,6 @@ const Cube = (props) => {
 
     return (
         <mesh position={props.position}> 
-        {/* visibile={props.isRendering} */}
             <primitive object={cube} />
         </mesh>
     );

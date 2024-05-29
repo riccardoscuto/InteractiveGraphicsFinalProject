@@ -110,18 +110,37 @@ function getNeighborhood(x, y, z, lato) {
     if (x != lato - 1 && y != 0 && z != lato - 1) set = [x + 1, y - 1, z + 1];
     if (x != lato - 1 && y != 0 && z != 0) seb = [x + 1, y - 1, z - 1];
     if (y != 0) s = [x, y - 1, z]; //si
-    if (y != 0 && z != lato - 1) st = [x, y - 1, z + 1]
-    if (y != 0 && z != 0) sb = [x, y - 1, z - 1]
+    if (y != 0 && z != lato - 1) st = [x, y - 1, z + 1];
+    if (y != 0 && z != 0) sb = [x, y - 1, z - 1];
     if (y != lato - 1) n = [x, y + 1, z]; //si
-    if (y != lato - 1 && z != lato - 1) nt = [x, y + 1, z + 1]
-    if (y != lato - 1 && z != 0) nb = [x, y + 1, z - 1]
-    if (z != 0) b = [x, y, z - 1]
+    if (y != lato - 1 && z != lato - 1) nt = [x, y + 1, z + 1];
+    if (y != lato - 1 && z != 0) nb = [x, y + 1, z - 1];
+    if (z != 0) b = [x, y, z - 1];
     if (z != lato - 1) t = [x, y, z + 1]
     if (x != lato - 1 && z != lato - 1) et = [x + 1, y, z + 1];
     if (x != lato - 1 && z != 0) eb = [x + 1, y, z - 1];
     if (x != lato - 1 && z != lato - 1 && y != lato - 1) net = [x + 1, y + 1, z + 1];
 
     return [e, w, n, s, t, b, ne, se, nw, sw, et, eb, wt, wb, nt, nb, st, sb, net, neb, set, seb, nwt, nwb, swt, swb];
+}
+
+function getNeighborhoodVN(x, y, z, lato) {
+    let e = null;
+    let w = null;
+    let n = null;
+    let s = null;
+    let t = null;
+    let b = null;
+
+    if (x != 0) w = [x - 1, y, z];
+    if (x != lato - 1) e = [x + 1, y, z];
+    if (y != 0) s = [x, y - 1, z];
+    if (y != lato - 1) n = [x, y + 1, z];
+    if (z != 0) b = [x, y, z - 1];
+    if (z != lato - 1) t = [x, y, z + 1];
+
+    return [e, w, n, s, t, b];
+
 }
 
 function isLive(cell, matrix) {
