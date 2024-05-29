@@ -64,34 +64,53 @@ function isLive(cell, matrix) {
     return matrix[cell[0]][cell[1]];
 }
 
-export function simulation(x, y, matrix, lato) {
-    const [n, ne, e, se, s, sw, w, nw] = getNeighborhood(x, y, lato);
-    const alive = isLive([x, y], matrix);
-    const wAlive = isLive(w, matrix);
-    const eAlive = isLive(e, matrix);
-    const sAlive = isLive(s, matrix);
-    const nAlive = isLive(n, matrix);
-    const neAlive = isLive(ne, matrix);
-    const nwAlive = isLive(nw, matrix);
-    const seAlive = isLive(se, matrix);
-    const swAlive = isLive(sw, matrix);
+export function simulation(x, y, matrix, lato, customRule) {
+    const { underpopulated, stable, birth, overpopulated, neigh } = customRule;
     let numberAlive = 0;
-    if (wAlive) numberAlive++;
-    if (eAlive) numberAlive++;
-    if (sAlive) numberAlive++;
-    if (nAlive) numberAlive++;
-    if (neAlive) numberAlive++;
-    if (nwAlive) numberAlive++;
-    if (seAlive) numberAlive++;
-    if (swAlive) numberAlive++;
-    // if (alive) numberAlive++;
-    //false muore
-    //true viva e Vegeta
-    if (alive && numberAlive < 2) return false;
-    if (alive && (numberAlive == 3 || numberAlive == 2)) return true;
-    if (alive && numberAlive > 3) return false;
-    if (!alive && numberAlive == 3) return true;
+    const neighborhood = neigh == "VM" ? getNeighborhoodVN(x, y, lato) : getNeighborhood(x, y, lato)
+    for (let cell of neighborhood) {
+        if (isLive(cell, matrix)) {
+            numberAlive++;
+        }
+    }
+    const alive = isLive([x, y], matrix)
+    if (Array.isArray(underpopulated)) {
+        if (alive && numberAlive > underpopulated[0] && numberAlive < underpopulated[1]) return false;
+    } else {
+        if (alive && numberAlive < underpopulated) return false;
+    }
+    if (Array.isArray(stable)) {
+        if (alive && numberAlive > stable[0] && numberAlive < stable[1]) return true;
+    } else {
+        if (alive && (numberAlive == stable)) return true;
+    }
+    if (Array.isArray(birth)) {
+        if (numberAlive > birth[0] && numberAlive < birth[1]) return true;
+    } else {
+        if ((numberAlive == birth)) return true;
+    }
+    if (Array.isArray(overpopulated)) {
+        if (alive && numberAlive > overpopulated[0] && numberAlive < overpopulated[1]) return false;
+    } else {
+        if (alive && numberAlive > overpopulated) return false;
+    }
     return false;
+}
+
+function getNeighborhoodVN(x, y, lato) {
+    let e = null;
+    let w = null;
+    let n = null;
+    let s = null;
+
+    if (x != 0) w = [x - 1, y];
+    if (x != lato - 1) e = [x + 1, y];
+    if (y != 0) s = [x, y - 1];
+    if (y != lato - 1) n = [x, y + 1];
+
+
+    return [e, w, n, s];
+
 }
 // Any live cell with fewer than two live neighbors dies as if caused by underpopulation.
 // Any live cell with two or three live neighbors lives on to the next generation.
@@ -103,13 +122,23 @@ export function currentPoint(matrix, index, lato) {
     return matrix[index % lato][Math.floor(index / lato)];
 }
 
-export function runSimulation(lato, Matrix) {
+export function runSimulation(lato, Matrix, customRule) {
     let newMatrix = []
     for (let x = 0; x < lato; x++) {
         newMatrix[x] = [];
         for (let y = 0; y < lato; y++) {
-            newMatrix[x][y] = simulation(x, y, Matrix, lato);
+            newMatrix[x][y] = simulation(x, y, Matrix, lato, customRule);
         }
     }
     return newMatrix
 }
+export const generationRandomMatrix = (lato) => {
+    const newMatrix = [];
+    for (let x = 0; x < lato; x++) {
+        newMatrix[x] = [];
+        for (let y = 0; y < lato; y++) {
+            newMatrix[x][y] = Math.random() < 0.5 ? true : false;
+        }
+    }
+    return newMatrix;
+};

@@ -20,7 +20,7 @@ export const generationMatrix = (lato) => {
         for (let y = 0; y < lato; y++) {
             newMatrix[x][y] = [];
             for (let z = 0; z < lato; z++) {
-                newMatrix[x][y][z] = 0;
+                newMatrix[x][y][z] = false;
             }
         }
     }
@@ -34,12 +34,13 @@ export const generationRandomMatrix = (lato) => {
         for (let y = 0; y < lato; y++) {
             newMatrix[x][y] = [];
             for (let z = 0; z < lato; z++) {
-                newMatrix[x][y][z] = Math.random() < 0.5 ? 1 : 0;
+                newMatrix[x][y][z] = Math.random() < 0.5 ? true : false;
             }
         }
     }
     return newMatrix;
 };
+
 
 function getNeighborhood(x, y, z, lato) {
     let e = null
@@ -167,28 +168,30 @@ export function simulation(x, y, z, matrix, lato) {
 }
 export function currentPoint(matrix, index, lato) {
     if (matrix.length < lato) return false;
-    console.log("sono un testo lungo", lato, index, "lungezza", matrix.length, index % lato, Math.floor(index / lato) % lato, Math.floor(index / (lato * lato)))
+    // console.log("sono un testo lungo", lato, index, "lungezza", matrix.length, index % lato, Math.floor(index / lato) % lato, Math.floor(index / (lato * lato)))
 
     return matrix[index % lato][Math.floor(index / lato) % lato][Math.floor(index / (lato * lato))];
 
 }
 
-export function runSimulation(lato, Matrix) {
-    let newMatrix = []
-    for (let x = 0; x < lato; x++) {
-        newMatrix[x] = [];
-        for (let y = 0; y < lato; y++) {
-            newMatrix[x][y] = [];
-            for (let z = 0; z < lato; z++) {
-                newMatrix[x][y][z] = simulation(x, y, z, Matrix, lato);
-            }
-        }
-    }
-    return newMatrix
-}
-export function simulationCustomRule(x, y, z, matrix, lato, underpopulated, stable, birth, overpopulated) {
+// export function runSimulation(lato, Matrix) {
+//     let newMatrix = []
+//     for (let x = 0; x < lato; x++) {
+//         newMatrix[x] = [];
+//         for (let y = 0; y < lato; y++) {
+//             newMatrix[x][y] = [];
+//             for (let z = 0; z < lato; z++) {
+//                 newMatrix[x][y][z] = simulation(x, y, z, Matrix, lato);
+//             }
+//         }
+//     }
+//     return newMatrix
+// }
+export function simulationCustomRule(x, y, z, matrix, lato, customRule) {
+    const { underpopulated, stable, birth, overpopulated, neigh } = customRule;
     let numberAlive = 0;
-    for (let cell of getNeighborhood(x, y, z, lato)) {
+    const neighborhood = neigh == "VM" ? getNeighborhoodVN(x, y, z, lato) : getNeighborhood(x, y, z, lato)
+    for (let cell of neighborhood) {
         if (isLive(cell, matrix)) {
             numberAlive++;
         }
@@ -216,14 +219,15 @@ export function simulationCustomRule(x, y, z, matrix, lato, underpopulated, stab
     }
     return false;
 }
-export function runSimulationCustom(lato, Matrix, underpopulated, stable, birth, overpopulated) {
+export function runSimulation(lato, Matrix, customRule) {
+    const { underpopulated, stable, birth, overpopulated, neigh } = customRule;
     let newMatrix = []
     for (let x = 0; x < lato; x++) {
         newMatrix[x] = [];
         for (let y = 0; y < lato; y++) {
             newMatrix[x][y] = [];
             for (let z = 0; z < lato; z++) {
-                newMatrix[x][y][z] = simulationCustomRule(x, y, z, Matrix, lato, underpopulated, stable, birth, overpopulated);
+                newMatrix[x][y][z] = simulationCustomRule(x, y, z, Matrix, lato, customRule);
             }
         }
     }
