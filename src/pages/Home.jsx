@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, PerformanceMonitor } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import Loader from '../components/Loader';
 import Cube from '../models/Cube';
@@ -10,11 +10,14 @@ import { useInterval } from '../hook/useInterval';
 import { currentPoint, generationMatrix, generationPosition, runSimulation, generationRandomMatrix } from '../functions/cellarAutomata';
 // import * as td  from "../functions/cellarAutomata3D"
 import Rules from "../config/rules.json";
+import { Perf } from 'r3f-perf'
+
 
 // const lato = 20;
 // const rendered = generationMatrix(lato);
 
 const Home = () => {
+    const [dpr, setDpr] = useState(0.5)
     const [darkMode, setDarkMode] = useState(false);
     const [cellShadingMode, setCellShadingMode] = useState(false);
     const [wireframeMode, setWireframeMode] = useState(false);
@@ -121,7 +124,7 @@ const Home = () => {
         } else if (darkMode && wireframeMode && cubeColors && cubeColors.length > 0) {
             return cubeColors[index];
         } else {
-            return "white";
+            return "red";
         }
     };
 
@@ -167,6 +170,14 @@ const Home = () => {
                             <select value={Space} onChange={(e) => setSpace(e.target.value)}>
                                 <option value="3D">3D</option>
                                 <option value="2D">2D</option>
+                            </select>
+
+                        </label>
+                        <label>
+                            Neigh:
+                            <select value={Neigh} onChange={(e) => setNeigh(e.target.value)}>
+                                <option value="M">M</option>
+                                <option value="VN">VN</option>
                             </select>
 
                         </label>
@@ -250,12 +261,16 @@ const Home = () => {
                 </div>
 
                 <Canvas
+                
+                 dpr={dpr}
                     camera={{ position: [35, 10, 10], near: 0.1, far: 1000 }}
                     style={{ width: "100vw", height: "100vh", zIndex: "1", background: darkMode ? "black" : "white" }}
-                >
+                >      <Perf position="bottom-left" />
+
+                    <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)} ></PerformanceMonitor>
                     <Suspense fallback={<Loader />}>
-                        <directionalLight position={[1, 1, 1]} intensity={darkMode ? 0.5 : 2} />
-                        <ambientLight intensity={darkMode ? 0.2 : 0.5} />
+                        {/* <directionalLight position={[1, 1, 1]} intensity={darkMode ? 0.5 : 2} /> */}
+                        {/* <ambientLight intensity={darkMode ? 0.2 : 0.5} /> */}
                         {darkMode ? null : <spotLight />}
                         {darkMode ? null : <pointLight />}
                         {darkMode ? null : <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />}

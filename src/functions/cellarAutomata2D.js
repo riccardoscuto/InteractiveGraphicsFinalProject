@@ -67,7 +67,7 @@ function isLive(cell, matrix) {
 export function simulation(x, y, matrix, lato, customRule) {
     const { underpopulated, stable, birth, overpopulated, neigh } = customRule;
     let numberAlive = 0;
-    const neighborhood = neigh == "VM" ? getNeighborhoodVN(x, y, lato) : getNeighborhood(x, y, lato)
+    const neighborhood = neigh == "VN" ? getNeighborhoodVN(x, y, lato) : getNeighborhood(x, y, lato)
     for (let cell of neighborhood) {
         if (isLive(cell, matrix)) {
             numberAlive++;

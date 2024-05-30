@@ -190,7 +190,7 @@ export function currentPoint(matrix, index, lato) {
 export function simulationCustomRule(x, y, z, matrix, lato, customRule) {
     const { underpopulated, stable, birth, overpopulated, neigh } = customRule;
     let numberAlive = 0;
-    const neighborhood = neigh == "VM" ? getNeighborhoodVN(x, y, z, lato) : getNeighborhood(x, y, z, lato)
+    const neighborhood = neigh == "VN" ? getNeighborhoodVN(x, y, z, lato) : getNeighborhood(x, y, z, lato)
     for (let cell of neighborhood) {
         if (isLive(cell, matrix)) {
             numberAlive++;
@@ -203,12 +203,13 @@ export function simulationCustomRule(x, y, z, matrix, lato, customRule) {
         if (alive && numberAlive < underpopulated) return false;
     }
     if (Array.isArray(stable)) {
-        if (alive && numberAlive > stable[0] && numberAlive < stable[1]) return true;
+        if (alive && numberAlive >= stable[0] && numberAlive <= stable[1]) return true;
     } else {
         if (alive && (numberAlive == stable)) return true;
     }
     if (Array.isArray(birth)) {
-        if (numberAlive > birth[0] && numberAlive < birth[1]) return true;
+        console.log("nascituro", numberAlive >= birth[0], numberAlive <= birth[1])
+        if (numberAlive >= birth[0] && numberAlive <= birth[1]) return true;
     } else {
         if ((numberAlive == birth)) return true;
     }
