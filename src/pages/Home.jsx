@@ -12,6 +12,7 @@ import { currentPoint, generationMatrix, generationPosition, runSimulation, gene
 import Rules from "../config/rules.json";
 import { Perf } from 'r3f-perf'
 import { GameOfLife } from '../components/GameOfLife';
+import { Instances } from '../components/Instances';
 
 
 
@@ -35,10 +36,10 @@ const Home = () => {
     const [Stable, setStable] = useState(2);
     const [Overpopulated, setOverpopulated] = useState(3);
     const [Neigh, setNeigh] = useState("M");
-    const [Lato, setLato] = useState(4);
+    const [Lato, setLato] = useState(128);
     const [colorMode, setColorMode] = useState("random");
     const [Rule, setRule] = useState({
-        lato: 4,
+        lato: 128,
         matrixType: "fixed",
         space: "3D",
         birth: 3,
@@ -245,7 +246,7 @@ const Home = () => {
                             speed={speed}
                             Spawn={Spawn}
                         />
-
+                       
                     </Suspense>
                 </Canvas>
             </>
