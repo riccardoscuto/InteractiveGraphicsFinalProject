@@ -13,11 +13,14 @@ export const generationPosition = (lato) => {
 }
 
 export const generationMatrix = (lato) => {
-    const toRet = []
-    for (let i = 0; i < lato; i++) {
-        toRet[i] = new Array(lato + 1).fill(false);
+    const newMatrix = []
+    for (let x = 0; x < lato; x++) {
+        newMatrix[x] = [];
+        for (let y = 0; y < lato; y++) {
+            newMatrix[x][y] = false;
+        }
     }
-    return toRet;
+    return newMatrix;
 }
 
 function getNeighborhood(x, y, lato) {
@@ -118,8 +121,10 @@ function getNeighborhoodVN(x, y, lato) {
 // Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
 
 export function currentPoint(matrix, index, lato) {
+    if (matrix.length < lato) return false;
 
-    return matrix[index % lato][Math.floor(index / lato)];
+    console.log(index, lato, matrix.lenght)
+    return matrix[index % lato][Math.floor(index / lato) % lato];
 }
 
 export function runSimulation(lato, Matrix, customRule) {

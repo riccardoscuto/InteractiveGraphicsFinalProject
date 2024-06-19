@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-import { OrbitControls} from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import Cube from '../models/Cube';
 // import * as sd from '../functions/cellarAutomata2D';
 import { useInterval } from '../hook/useInterval';
 import { currentPoint, generationMatrix, generationPosition, runSimulation, generationRandomMatrix } from '../functions/cellarAutomata';
 import { useFrame } from '@react-three/fiber';
+import { Instances } from './Instances';
 // import * as td  from "../functions/cellarAutomata3D"
 
 
-export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode,  speed, Running , Rule}) => {
+export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Running, Rule }) => {
     const [Positions, setPositions] = useState(generationPosition(Rule.space, Rule.lato));
     const [Matrix, setMatrix] = useState(generationMatrix(Rule.space, Rule.lato));
     let lastIndex = null;
@@ -21,7 +22,8 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode,  speed, R
         setPositions(newPositions)
         if (Rule.matrixType == "fixed") {
             newMatrix = generationMatrix(Rule.space, Rule.lato);
-            if(lastIndex == Rule.index){
+            console.log(newMatrix)
+            if (lastIndex == Rule.index) {
                 translateM(Matrix, newMatrix);
             }
             if (Rule.space === "3D") {
@@ -44,11 +46,11 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode,  speed, R
     }, [Rule])
     let lastFrame = Date.now();
     useFrame(() => {
-        if (Running && Date.now()- lastFrame> speed) {
+        if (Running && Date.now() - lastFrame > speed) {
             console.log("ciao");
-            const newMatrix = runSimulation(Rule.space, Rule.lato, Matrix,Rule);
+            const newMatrix = runSimulation(Rule.space, Rule.lato, Matrix, Rule);
             setMatrix(newMatrix);
-            lastFrame=Date.now();
+            lastFrame = Date.now();
         }
     });
 
@@ -101,7 +103,7 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode,  speed, R
             {darkMode ? null : <spotLight />}
             {darkMode ? null : <pointLight />}
             {darkMode ? null : <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />}
-            {Positions.length > 0 && Rule.lato && Matrix.length > 0 && Rule.space == "3D"
+            {Positions.length > 0 && Rule.lato && Rule.lato <=20 && Matrix.length > 0 && Rule.space == "3D"
                 && Positions.flat(1).map((position, index) => (
                     <Cube key={index}
                         position={position}
@@ -124,13 +126,14 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode,  speed, R
                         wireframeMode={wireframeMode} />
                 ))}
 
+            {Rule.space == "3D" && Rule.lato >20 &&<Instances lato={Rule.lato} Matrix={Matrix} darkMode={darkMode} />}
             <OrbitControls />
             <EffectComposer>
                 <Bloom
                     luminanceThreshold={0}
                     luminanceSmoothing={0.5}
                     height={300}
-                    intensity={darkMode ? 2 : 0}
+                    intensity={darkMode ? 1 : 0}
                 />
             </EffectComposer>
         </>
