@@ -4,7 +4,7 @@ import Cube from "../models/Cube";
 import { currentPoint } from "../functions/cellarAutomata3D"
 
 
-export function Instances({ lato, temp = new THREE.Object3D(), Matrix, darkMode }) {
+export function Instances({ lato, temp = new THREE.Object3D(), Matrix, darkMode, wireframeMode, color }) {
     const instancedMeshRef = useRef()
     useEffect(() => {
         // Set positions
@@ -23,9 +23,15 @@ export function Instances({ lato, temp = new THREE.Object3D(), Matrix, darkMode 
         instancedMeshRef.current.instanceMatrix.needsUpdate = true
     }, [lato, Matrix])
     return (
-        <instancedMesh ref={instancedMeshRef} args={[null, null, lato ** 3]}>
+        <instancedMesh ref={instancedMeshRef} args={[null, null, lato ** 3]} >
             <boxGeometry />
-              {darkMode ? <meshBasicMaterial color={"white"}/>: <meshPhongMaterial />}
+            <meshStandardMaterial
+                wireframe={wireframeMode}
+                color={color}
+                emissive={darkMode ? color : undefined}
+                emissiveIntensity={darkMode ? 1.5 : undefined}
+            />
+
         </instancedMesh>
     )
 }

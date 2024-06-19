@@ -12,6 +12,7 @@ import { currentPoint, generationMatrix, generationPosition, runSimulation, gene
 import Rules from "../config/rules.json";
 import { Perf } from 'r3f-perf'
 import { GameOfLife } from '../components/GameOfLife';
+import { Raytracer } from '@react-three/lgl';
 
 
 
@@ -46,7 +47,7 @@ const Home = () => {
         stable: 2,
         overpopulated: 3,
         neigh: "M",
-        colorMode: "random",
+        colorMode: "white",
         spawn: [],
     })
 
@@ -87,12 +88,13 @@ const Home = () => {
 
 
     const colors = [
-        "red", "white", "blue", "yellow", "#324e2a",
-        "#1b3644", "#3d0079", "#ffbf6e", "brown", "cyan",
+        // "red", "white", "blue", "yellow", "#324e2a",
+        // "#1b3644", "#3d0079", "#ffbf6e", "brown", "cyan",
+        "white"
     ];
     useEffect(() => {
         if (wireframeMode) {
-            setCubeColors(colors.map(() => generateRandomColor()));
+            setCubeColors(colors.map(() =>"grey"));
         }
     }, [wireframeMode]);
 
@@ -224,11 +226,10 @@ const Home = () => {
                     camera={{ position: [35, 10, 10], near: 0.1, far: 1000 }}
                     style={{ width: "100vw", height: "100vh", zIndex: "1", background: darkMode ? "black" : "white" }}
                 >      <Perf position="bottom-left" />
-
                     <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)} ></PerformanceMonitor>
                     <Suspense fallback={<Loader />}>
                         <GameOfLife
-                        Rule={Rule}
+                            Rule={Rule}
                             Lato={Lato}
                             Space={Space}
                             cellShadingMode={cellShadingMode}

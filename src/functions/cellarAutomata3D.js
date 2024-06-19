@@ -7,7 +7,7 @@ export const generationPosition = (lato) => {
             if (i % lato == 0) {
                 currentRow++;
             }
-            toRet[j].push([(i % lato) * 2, j * 2, currentRow * 2]);
+            toRet[j].push([(i % lato) * 2.5, j * 2.5, currentRow * 2.5]);
         }
     }
     return toRet;

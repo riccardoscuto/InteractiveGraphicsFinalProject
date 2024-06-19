@@ -87,10 +87,9 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Ru
     };
 
     const getColor = (index) => {
-        if (Rule.colorMode === "random" && (!wireframeMode || (cubeColors && cubeColors.length > 0))) {
+        if (Rule.colorMode === "random" ) {
             return generateRandomColor();
-        } else if (darkMode && wireframeMode && cubeColors && cubeColors.length > 0) {
-            return cubeColors[index];
+        
         } else {
             return "red";
         }
@@ -126,7 +125,7 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Ru
                         wireframeMode={wireframeMode} />
                 ))}
 
-            {Rule.space == "3D" && Rule.lato >20 &&<Instances lato={Rule.lato} Matrix={Matrix} darkMode={darkMode} />}
+            {Rule.space == "3D" && Rule.lato >20 &&<Instances lato={Rule.lato} Matrix={Matrix} darkMode={darkMode} wireframeMode= {wireframeMode} color={getColor(0)} />}
             <OrbitControls />
             <EffectComposer>
                 <Bloom
