@@ -91,14 +91,14 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Ru
             return generateRandomColor();
         
         } else {
-            return "red";
+            return "#c55347";
         }
     };
 
     return (
         <>
-            {/* <directionalLight position={[1, 1, 1]} intensity={darkMode ? 0.5 : 2} /> */}
-            {/* <ambientLight intensity={darkMode ? 0.2 : 0.5} /> */}
+            {<directionalLight position={[1, 1, 1]} intensity={darkMode ? 0.5 : 2} /> }
+            { <ambientLight intensity={darkMode ? 0.2 : 0.5} /> }
             {darkMode ? null : <spotLight />}
             {darkMode ? null : <pointLight />}
             {darkMode ? null : <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />}
