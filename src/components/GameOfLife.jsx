@@ -98,10 +98,10 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Ru
     return (
         <>
             {<directionalLight position={[1, 1, 1]} intensity={darkMode ? 0.5 : 2} /> }
-            { <ambientLight intensity={darkMode ? 0.2 : 0.5} /> }
-            {darkMode ? null : <spotLight />}
+            {/* { <ambientLight intensity={darkMode ? 0.2 : 0.5} /> } */}
+            {/* {darkMode ? null : <spotLight />}
             {darkMode ? null : <pointLight />}
-            {darkMode ? null : <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />}
+            {darkMode ? null : <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />} */}
             {Positions.length > 0 && Rule.lato && Rule.lato <=20 && Matrix.length > 0 && Rule.space == "3D"
                 && Positions.flat(1).map((position, index) => (
                     <Cube key={index}

@@ -69,32 +69,7 @@ function getNeighborhood(x, y, z, lato) {
     let nwb = null
     let swt = null
     let swb = null
-        // [1, 0, 0] (est) ok si
-        // [-1, 0, 0] (ovest) ok 
-        // [0, 1, 0] (nord)ok
-        // [0, -1, 0] (sud)ok
-        // [0, 0, 1] (sopra)ok
-        // [0, 0, -1] (sotto)ok
-        // [1, 1, 0] (nord-est) ok
-        // [1, -1, 0] (sud-est)ok
-        // [-1, 1, 0] (nord-ovest) ok
-        // [-1, -1, 0] (sud-ovest) ok 
-        // [1, 0, 1] (est sopra)ok
-        // [1, 0, -1] (est sotto)ok
-        // [-1, 0, 1] (ovest sopra)ok 
-        // [-1, 0, -1] (ovest sotto)ok 
-        // [0, 1, 1] (nord sopra)ok
-        // [0, 1, -1] (nord sotto)ok
-        // [0, -1, 1] (sud sopra)ok
-        // [0, -1, -1] (sud sotto)ok 
-        // [1, 1, 1] (nord-est sopra)ok
-        // [1, 1, -1] (nord-est sotto)ok
-        // [1, -1, 1] (sud-est sopra)ok
-        // [1, -1, -1] (sud-est sotto)ok
-        // [-1, 1, 1] (nord-ovest sopra)ok
-        // [-1, 1, -1] (nord-ovest sotto)ok
-        // [-1, -1, 1] (sud-ovest sopra)ok
-        // [-1, -1, -1] (sud-ovest sotto)ok
+
     if (x != 0) w = [x - 1, y, z]; //si
     if (x != 0 && y != 0) sw = [x - 1, y - 1, z];
     if (x != 0 && y != lato - 1) nw = [x - 1, y + 1, z];

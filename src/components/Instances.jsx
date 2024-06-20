@@ -25,7 +25,7 @@ export function Instances({ lato, temp = new THREE.Object3D(), Matrix, darkMode,
     return (
         <instancedMesh ref={instancedMeshRef} args={[null, null, lato ** 3]} >
             <boxGeometry />
-            <meshStandardMaterial
+            <meshToonMaterial
                 wireframe={wireframeMode}
                 color={color}
                 emissive={darkMode ? color : color}

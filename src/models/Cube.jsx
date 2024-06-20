@@ -1,7 +1,7 @@
 import { useLoader } from '@react-three/fiber';
 import React, { useMemo } from 'react';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { MeshStandardMaterial, MeshBasicMaterial, WireframeGeometry, LineSegments, LineBasicMaterial, MeshNormalMaterial } from 'three';
+import {MeshToonMaterial,  MeshStandardMaterial, MeshBasicMaterial, WireframeGeometry, LineSegments, LineBasicMaterial, MeshNormalMaterial } from 'three';
 import cubeScene from '../assets/3d/cube.obj';
 
 const Cube = (props) => {
@@ -15,7 +15,7 @@ const Cube = (props) => {
                 // child.material = new MeshBasicMaterial({ color: props.color });
                 // const wireframe = new LineSegments(wireframeGeometry, new MeshBasicMaterial({ color: '#000000' , wireframe: true }));
                 // child.add(wireframe);
-                child.material = new MeshStandardMaterial({
+                child.material = new MeshToonMaterial({
                     wireframe: props.wireframeMode,
                     color: props.color,
                     emissive: props.darkMode ? props.color : undefined,

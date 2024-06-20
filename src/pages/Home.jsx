@@ -31,6 +31,7 @@ import {
 import { withEmotionCache } from '@emotion/react';
 
 const Home = () => {
+    const [canvasSize, setCanvasSize] = useState({ width: window.innerWidth, height: window.innerHeight });
     const [dpr, setDpr] = useState(0.5)
     const [cubeColors, setCubeColors] = useState()
     const [darkMode, setDarkMode] = useState(false);
@@ -39,7 +40,7 @@ const Home = () => {
     const [Running, setRunning] = useState(false);
     const [sliderValue, setSliderValue] = useState(50);
     const speed = 2000 - (sliderValue * 19);
-    const [matrixType, setMatrixType] = useState("fixed");
+    const [matrixType, setMatrixType] = useState("random");
     const [Space, setSpace] = useState("3D");
     const [Spawn, setSpawn] = useState([])
     const [Birth, setBirth] = useState(3);
@@ -48,17 +49,17 @@ const Home = () => {
     const [Overpopulated, setOverpopulated] = useState(3);
     const [Neigh, setNeigh] = useState("M");
     const [Lato, setLato] = useState(4);
-    const [colorMode, setColorMode] = useState("random");
+    const [colorMode, setColorMode] = useState("red");
     const [Rule, setRule] = useState({
         lato: 4,
-        matrixType: "fixed",
+        matrixType: "random",
         space: "3D",
         birth: 3,
         underpopulated: 2,
         stable: 2,
         overpopulated: 3,
         neigh: "M",
-        colorMode: "white",
+        colorMode: "red",
         spawn: [],
     })
 
@@ -84,7 +85,16 @@ const Home = () => {
             index:e.target.value
         })
     }
-
+    useEffect(() => {
+        const handleResize = () => {
+          setCanvasSize({ width: window.innerWidth, height: window.innerHeight });
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
+    
     const colors = ["white"];
     useEffect(() => {
         if (wireframeMode) {
@@ -158,7 +168,7 @@ const Home = () => {
                             <FormLabel>Size: {Rule.lato}</FormLabel>
                             <Slider
                                 min={1}
-                                max={30}
+                                max={60 }
                                 value={Rule.lato}
                                 onChange={(value) => changeRule("lato", value)}
                             >
@@ -241,8 +251,8 @@ const Home = () => {
                         <FormControl>
                             <FormLabel>Color Mode:</FormLabel>
                             <Select value={Rule.colorMode} onChange={(e) => changeRule("colorMode", e.target.value)}>
+                                <option value="none">Red</option>
                                 <option value="random">Random</option>
-                                <option value="none">White</option>
                             </Select>
                         </FormControl>
                         <FormControl>
@@ -258,6 +268,7 @@ const Home = () => {
                 </Box>
 
                 <Canvas
+                style={{ width: canvasSize.width, height: canvasSize.height }}
                     dpr={dpr}
                     camera={{ position: [35, 10, 10], near: 0.1, far: 1000 }}
                     style={{ width: "100vw", height: "100vh", zIndex: "1", background: darkMode ? "black" : "#bce4e5" }}
