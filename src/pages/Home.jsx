@@ -115,8 +115,9 @@ const Home = () => {
   }
     if (Lato > 0)
         return (
-            <ChakraProvider>
+            <ChakraProvider >
                 <Box
+                    style={{width:"31vw", maxHeight:"90vh", overflowY:"auto"}}
                     position='absolute'
                     zIndex={2}
                     top={12}
@@ -268,7 +269,7 @@ const Home = () => {
                 </Box>
 
                 <Canvas
-                style={{ width: canvasSize.width, height: canvasSize.height }}
+               
                     dpr={dpr}
                     camera={{ position: [35, 10, 10], near: 0.1, far: 1000 }}
                     style={{ width: "100vw", height: "100vh", zIndex: "1", background: darkMode ? "black" : "#bce4e5" }}
