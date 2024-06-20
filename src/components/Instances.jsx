@@ -28,8 +28,8 @@ export function Instances({ lato, temp = new THREE.Object3D(), Matrix, darkMode,
             <meshStandardMaterial
                 wireframe={wireframeMode}
                 color={color}
-                emissive={darkMode ? color : undefined}
-                emissiveIntensity={darkMode ? 1.5 : undefined}
+                emissive={darkMode ? color : color}
+                emissiveIntensity={darkMode ? 1.5 : 0}
             />
 
         </instancedMesh>

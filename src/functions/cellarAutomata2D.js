@@ -123,7 +123,7 @@ function getNeighborhoodVN(x, y, lato) {
 export function currentPoint(matrix, index, lato) {
     if (matrix.length < lato) return false;
 
-    console.log(index, lato, matrix.lenght)
+    console.log(index, lato, matrix.length)
     return matrix[index % lato][Math.floor(index / lato) % lato];
 }
 

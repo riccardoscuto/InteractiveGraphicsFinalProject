@@ -526,7 +526,7 @@
         ]
     }, {
         "text": "Longevità Maggiore",
-        "lato": 6,
+        "lato": 7,
         "birth": 3,
         "underpopulated": 2,
         "overpopulated": 5,
@@ -543,7 +543,7 @@
             [6, 4, 4],
             [4, 4, 3],
             [5, 4, 3],
-            [6, 4, 3],
+            [5, 4, 3],
             [5, 4, 2]
         ]
     }, {

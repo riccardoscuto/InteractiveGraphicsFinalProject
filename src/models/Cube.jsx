@@ -19,7 +19,7 @@ const Cube = (props) => {
                     wireframe: props.wireframeMode,
                     color: props.color,
                     emissive: props.darkMode ? props.color : undefined,
-                    emissiveIntensity: props.darkMode ? 1.5 : undefined
+                    emissiveIntensity: props.darkMode ? 1.5 : 0
                 })
                 // child.material = props.darkMode
                 // ? new MeshBasicMaterial({ color: props.color, emissive: props.color, emissiveIntensity: 1.5 }) 
