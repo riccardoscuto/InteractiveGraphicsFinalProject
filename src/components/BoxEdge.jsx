@@ -19,11 +19,11 @@ const BoxEdge = ({ size,  offset }) => {
     // }, [size]);
 
     return (
-        <mesh position={[offset[0]+size / 2, offset[1]+size / 2, offset[2]+size / 2 + 2.5]}>
+        <mesh position={[offset[0]+size / 1.8, offset[1]+size / 2, offset[2]+size /2+ 2.5]}>
             <lineSegments>
-                <edgesGeometry  attach={"geometry"} args={[new THREE.BoxGeometry(size * 1.35, size * 1.35, size * 1.35)]}/>
+                <edgesGeometry   attach={"geometry"} args={[new THREE.BoxGeometry(size * 1.35, size * 1.35, size * 1.35)]}/>
                 {/* <boxGeometry attach={"geometry"} args={[size * 1.35, size * 1.35, size * 1.35]} /> */}
-                <lineBasicMaterial transparent={true} opacity={0.2} />
+                <lineBasicMaterial color={"#708889"}  transparent={true} opacity={0.2} />
             </lineSegments>
 
 

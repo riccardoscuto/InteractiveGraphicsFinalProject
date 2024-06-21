@@ -71,15 +71,10 @@ const Home = () => {
   const [colorMode, setColorMode] = useState("red");
   const palette = [
     "#c55347",
-    "#e26d5a","#efa8b8","#d7bba8","#bbb09b","#3e2a35", 
-    "gray.700",
-    "green.500",
-    "blue.500",
-    "blue.800",
-    "yellow.500",
-    "orange.500",
-    "purple.500",
-    "pink.500"
+   "#a62c37", 
+   "#819238",
+   "#12354e", 
+   "#34454c"
   ]
   const [Color, setColor] = useState(palette[0]);
   const [Rule, setRule] = useState({
@@ -158,16 +153,16 @@ const Home = () => {
           top={12}
           right={10}
           p={4}
-          bg="rgba(0, 0, 0, 0.6)"
+          bg="rgba(0, 0, 0, 0.4)"
           borderRadius="md"
           backdropFilter="blur(10px)"
         >
           <VStack spacing={4} align='start'>
             <HStack>
-              <Button colorScheme={Running ? "red" : "blue"} onClick={() => setRunning(!Running)}>
+              <Button colorScheme={Running ? "orange" : "teal"} onClick={() => setRunning(!Running)}>
                 {Running ? "Pause" : "Start"}
               </Button>
-              <Button colorScheme={darkMode ? "red" : "blue"} onClick={() => setDarkMode(!darkMode)}>
+              <Button colorScheme={darkMode ? "orange" : "teal"} onClick={() => setDarkMode(!darkMode)}>
                 {darkMode ? "Light Mode" : "Dark Mode"}
 
               </Button>
@@ -175,16 +170,19 @@ const Home = () => {
                 {cellShadingMode ? " Cell Shading" : " Cell Shading"}
 
               </Button> */}
-              <Button colorScheme={wireframeMode ? "red" : "blue"} onClick={() => setWireframeMode(!wireframeMode)}>
+              <Button colorScheme={wireframeMode ? "orange" : "teal"} onClick={() => setWireframeMode(!wireframeMode)}>
                 {wireframeMode ? " Wireframe" : " Wireframe"}
               </Button>
+              <Button colorScheme={Grid ? "orange" : "teal"} onClick={() => setGrid(!Grid)}>
+                {grid ? " Grid" : " Grid"}
+              </Button>
               <Stack spacing={5} direction='row'>
-                <Checkbox isChecked={Grid} onChange={() => {
+                {/* <Checkbox isChecked={Grid} onChange={() => {
                   setGrid(!Grid)
                 }} >
                   Grid
-                </Checkbox>
-                <ColorPicker colors={palette} color={Color} setColor={setColor} />
+                </Checkbox> */}
+               
               </Stack>
 
             </HStack>
@@ -195,6 +193,15 @@ const Home = () => {
                 <option value="random">Random</option>
               </Select>
             </FormControl> */}
+             <FormControl>
+              <FormLabel>Select Rule:</FormLabel>
+              <Select defaultValue={undefined} onChange={handleChange}>
+                <option value={[]} key={-1}></option>
+                {Rules.map((element, index) => (
+                  <option value={index} key={index}>{element.text}</option>
+                ))}
+              </Select>
+            </FormControl>
             <FormControl>
               <FormLabel>Dimension:</FormLabel>
               <Select value={Rule.space} onChange={(e) => changeRule("space", e.target.value)}>
@@ -293,24 +300,19 @@ const Home = () => {
                 <SliderThumb />
               </Slider>
             </FormControl>
-            <FormControl>
+            {/* <FormControl>
               <FormLabel>Color Mode:</FormLabel>
               <Select value={Rule.colorMode} onChange={(e) => changeRule("colorMode", e.target.value)}>
                 <option value="none">Red</option>
                 <option value="random">Random</option>
               </Select>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Select Rule:</FormLabel>
-              <Select defaultValue={undefined} onChange={handleChange}>
-                <option value={[]} key={-1}></option>
-                {Rules.map((element, index) => (
-                  <option value={index} key={index}>{element.text}</option>
-                ))}
-              </Select>
-            </FormControl>
+            </FormControl> */}
+           
           </VStack>
         </Box>
+        <Box position="absolute" top="15" left="5" zIndex={10}>
+                  <ColorPicker colors={palette} color={Color} setColor={setColor} />
+                </Box>
 
         <Canvas
           dpr={dpr}
