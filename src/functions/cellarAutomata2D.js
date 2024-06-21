@@ -4,10 +4,8 @@ export const generationPosition = (lato) => {
     for (let i = 0; i < lato * lato; i++) {
         if (i % lato == 0) {
             currentRow++;
-
         }
         toRet.push([i % lato * 2.1, currentRow * 2.1, 0])
-
     }
     return toRet;
 }
@@ -24,12 +22,6 @@ export const generationMatrix = (lato) => {
 }
 
 function getNeighborhood(x, y, lato) {
-
-    //w= sinistra, negativo
-    //s = giù, negativo
-    //e=destra, positivo
-    //n=su, positivo
-
     let n, ne, e, se, s, sw, w, nw;
     n = null;
     ne = null;
@@ -59,11 +51,9 @@ function getNeighborhood(x, y, lato) {
 }
 
 function isLive(cell, matrix) {
-    //PRIAMA X E POI Y 
     if (cell === null) {
         return false;
     }
-
     return matrix[cell[0]][cell[1]];
 }
 
@@ -110,8 +100,6 @@ function getNeighborhoodVN(x, y, lato) {
     if (x != lato - 1) e = [x + 1, y];
     if (y != 0) s = [x, y - 1];
     if (y != lato - 1) n = [x, y + 1];
-
-
     return [e, w, n, s];
 
 }
@@ -122,8 +110,6 @@ function getNeighborhoodVN(x, y, lato) {
 
 export function currentPoint(matrix, index, lato) {
     if (matrix.length < lato) return false;
-
-    console.log(index, lato, matrix.length)
     return matrix[index % lato][Math.floor(index / lato) % lato];
 }
 

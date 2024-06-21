@@ -2,17 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import { OrbitControls, PerformanceMonitor } from "@react-three/drei";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import Loader from '../components/Loader';
-import Cube from '../models/Cube';
-import { useInterval } from '../hook/useInterval';
-import { currentPoint, generationMatrix, generationPosition, runSimulation, generationRandomMatrix } from '../functions/cellarAutomata';
 import Rules from "../config/rules.json";
 import { Perf } from 'r3f-perf'
 import { GameOfLife } from '../components/GameOfLife';
-import { Raytracer } from '@react-three/lgl';
-import { Texture } from 'three';
-import BoxEdge from '../components/BoxEdge';
 import {
   ChakraProvider,
   Box,
@@ -22,21 +15,16 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
-  Switch,
   FormControl,
   FormLabel,
   VStack,
   HStack,
-  Text,
   extendTheme,
-  CSSReset,
   Stack,
-  Checkbox,
   grid,
 } from "@chakra-ui/react";
-import { withEmotionCache } from '@emotion/react';
-import { color } from 'framer-motion';
 import ColorPicker from '../components/ColorPicker';
+import { EffectComposer, Pixelation } from '@react-three/postprocessing';
 
 const theme = extendTheme({
   styles: {
@@ -71,10 +59,10 @@ const Home = () => {
   const [colorMode, setColorMode] = useState("red");
   const palette = [
     "#c55347",
-   "#a62c37", 
-   "#819238",
-   "#12354e", 
-   "#34454c"
+    "#a62c37",
+    "#819238",
+    "#12354e",
+    "#34454c"
   ]
   const [Color, setColor] = useState(palette[0]);
   const [Rule, setRule] = useState({
@@ -164,12 +152,7 @@ const Home = () => {
               </Button>
               <Button colorScheme={darkMode ? "orange" : "teal"} onClick={() => setDarkMode(!darkMode)}>
                 {darkMode ? "Light Mode" : "Dark Mode"}
-
               </Button>
-              {/* <Button onClick={() => setCellShadingMode(!cellShadingMode)}>
-                {cellShadingMode ? " Cell Shading" : " Cell Shading"}
-
-              </Button> */}
               <Button colorScheme={wireframeMode ? "orange" : "teal"} onClick={() => setWireframeMode(!wireframeMode)}>
                 {wireframeMode ? " Wireframe" : " Wireframe"}
               </Button>
@@ -177,23 +160,9 @@ const Home = () => {
                 {grid ? " Grid" : " Grid"}
               </Button>
               <Stack spacing={5} direction='row'>
-                {/* <Checkbox isChecked={Grid} onChange={() => {
-                  setGrid(!Grid)
-                }} >
-                  Grid
-                </Checkbox> */}
-               
               </Stack>
-
             </HStack>
-            {/* <FormControl>
-              <FormLabel>Matrix Type:</FormLabel>
-              <Select value={Rule.matrixType} onChange={(e) => changeRule("matrixType", e.target.value)}>
-                <option value="fixed">Fixed</option>
-                <option value="random">Random</option>
-              </Select>
-            </FormControl> */}
-             <FormControl>
+            <FormControl>
               <FormLabel>Select Rule:</FormLabel>
               <Select defaultValue={undefined} onChange={handleChange}>
                 <option value={[]} key={-1}></option>
@@ -300,29 +269,21 @@ const Home = () => {
                 <SliderThumb />
               </Slider>
             </FormControl>
-            {/* <FormControl>
-              <FormLabel>Color Mode:</FormLabel>
-              <Select value={Rule.colorMode} onChange={(e) => changeRule("colorMode", e.target.value)}>
-                <option value="none">Red</option>
-                <option value="random">Random</option>
-              </Select>
-            </FormControl> */}
-           
           </VStack>
         </Box>
         <Box position="absolute" top="15" left="5" zIndex={10}>
-                  <ColorPicker colors={palette} color={Color} setColor={setColor} />
-                </Box>
-
+          <ColorPicker colors={palette} color={Color} setColor={setColor} />
+        </Box>
         <Canvas
           dpr={dpr}
           camera={{ position: [35, 10, 10], near: 0.1, far: 1000 }}
-          style={{ width: "100vw", height: "100vh", zIndex: "1", background: darkMode ? "black" : "#bce4e5" }}
+          style={{ width: "100vw", height: "100vh", zIndex: "1" }}
         >
+
+          <color attach={"background"} args={[darkMode ? "black" : "#bce4e5"]} />
           <Perf position="bottom-left" />
           <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)} />
           <Suspense fallback={<Loader />}>
-
             <GameOfLife
               Grid={Grid}
               Rule={Rule}
@@ -343,6 +304,9 @@ const Home = () => {
               Spawn={Spawn}
               Color={Color}
             />
+            {/* <EffectComposer>
+          <Pixelation granularity={5} />
+        </EffectComposer> */}
           </Suspense>
         </Canvas>
       </ChakraProvider>

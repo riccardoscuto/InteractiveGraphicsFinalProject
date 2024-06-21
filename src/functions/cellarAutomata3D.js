@@ -107,24 +107,19 @@ function getNeighborhoodVN(x, y, z, lato) {
     let s = null;
     let t = null;
     let b = null;
-
     if (x != 0) w = [x - 1, y, z];
     if (x != lato - 1) e = [x + 1, y, z];
     if (y != 0) s = [x, y - 1, z];
     if (y != lato - 1) n = [x, y + 1, z];
     if (z != 0) b = [x, y, z - 1];
     if (z != lato - 1) t = [x, y, z + 1];
-
     return [e, w, n, s, t, b];
-
 }
 
 function isLive(cell, matrix) {
-    //PRIAMA X E POI Y E POI Z (TECNOLOGIA 3d)
     if (cell === null) {
         return false;
     }
-
     return matrix[cell[0]][cell[1]][cell[2]];
 }
 export function simulation(x, y, z, matrix, lato) {
@@ -143,25 +138,10 @@ export function simulation(x, y, z, matrix, lato) {
 }
 export function currentPoint(matrix, index, lato) {
     if (matrix.length < lato) return false;
-    // console.log("sono un testo lungo", lato, index, "lungezza", matrix.length, index % lato, Math.floor(index / lato) % lato, Math.floor(index / (lato * lato)))
 
     return matrix[index % lato][Math.floor(index / lato) % lato][Math.floor(index / (lato * lato))];
 
 }
-
-// export function runSimulation(lato, Matrix) {
-//     let newMatrix = []
-//     for (let x = 0; x < lato; x++) {
-//         newMatrix[x] = [];
-//         for (let y = 0; y < lato; y++) {
-//             newMatrix[x][y] = [];
-//             for (let z = 0; z < lato; z++) {
-//                 newMatrix[x][y][z] = simulation(x, y, z, Matrix, lato);
-//             }
-//         }
-//     }
-//     return newMatrix
-// }
 export function simulationCustomRule(x, y, z, matrix, lato, customRule) {
     const { underpopulated, stable, birth, overpopulated, neigh } = customRule;
     let numberAlive = 0;
@@ -183,7 +163,6 @@ export function simulationCustomRule(x, y, z, matrix, lato, customRule) {
         if (alive && (numberAlive == stable)) return true;
     }
     if (Array.isArray(birth)) {
-        console.log("nascituro", numberAlive >= birth[0], numberAlive <= birth[1])
         if (numberAlive >= birth[0] && numberAlive <= birth[1]) return true;
     } else {
         if ((numberAlive == birth)) return true;

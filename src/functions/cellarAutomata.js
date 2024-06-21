@@ -41,7 +41,6 @@ export function generationPosition(space, lato) {
     }
 }
 export function generationRandomMatrix(space, lato) {
-    console.log("EIGI")
     switch (space) {
         case "2D":
             return sd.generationRandomMatrix(lato)

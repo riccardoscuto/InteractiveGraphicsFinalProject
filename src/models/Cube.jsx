@@ -10,20 +10,12 @@ const Cube = (props) => {
         const clonedCube = originalCube.clone();
         clonedCube.traverse((child) => {
             if (child.isMesh) {
-
-                // const wireframeGeometry = new WireframeGeometry(child.geometry);
-                // child.material = new MeshBasicMaterial({ color: props.color });
-                // const wireframe = new LineSegments(wireframeGeometry, new MeshBasicMaterial({ color: '#000000' , wireframe: true }));
-                // child.add(wireframe);
                 child.material = new MeshToonMaterial({
                     wireframe: props.wireframeMode,
                     color: props.color,
                     emissive: props.darkMode ? props.color : undefined,
                     emissiveIntensity: props.darkMode ? 1.5 : 0
                 })
-                // child.material = props.darkMode
-                // ? new MeshBasicMaterial({ color: props.color, emissive: props.color, emissiveIntensity: 1.5 }) 
-                // : new MeshStandardMaterial({ color: props.color });
             }
         }
         );
