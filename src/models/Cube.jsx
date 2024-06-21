@@ -37,6 +37,7 @@ const Cube = (props) => {
     return (
         <mesh position={props.position}>
             <primitive object={cube} />
+            
         </mesh>
     );
 };

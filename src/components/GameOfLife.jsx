@@ -8,10 +8,11 @@ import { useInterval } from '../hook/useInterval';
 import { currentPoint, generationMatrix, generationPosition, runSimulation, generationRandomMatrix } from '../functions/cellarAutomata';
 import { useFrame } from '@react-three/fiber';
 import { Instances } from './Instances';
+import BoxEdge from './BoxEdge';
 // import * as td  from "../functions/cellarAutomata3D"
 
 
-export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Running, Rule }) => {
+export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Running, Rule, Grid , Color}) => {
     const [Positions, setPositions] = useState(generationPosition(Rule.space, Rule.lato));
     const [Matrix, setMatrix] = useState(generationMatrix(Rule.space, Rule.lato));
     let lastIndex = null;
@@ -87,9 +88,9 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Ru
     };
 
     const getColor = (index) => {
-        if (Rule.colorMode === "random" ) {
+        if (Rule.colorMode === "random") {
             return generateRandomColor();
-        
+
         } else {
             return "#c55347";
         }
@@ -97,35 +98,46 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Ru
 
     return (
         <>
-            {<directionalLight position={[1, 1, 1]} intensity={darkMode ? 0.5 : 2} /> }
+            {<directionalLight position={[1, 1, 1]} intensity={darkMode ? 0.5 : 2} />}
             {/* { <ambientLight intensity={darkMode ? 0.2 : 0.5} /> } */}
             {/* {darkMode ? null : <spotLight />}
             {darkMode ? null : <pointLight />}
             {darkMode ? null : <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />} */}
-            {Positions.length > 0 && Rule.lato && Rule.lato <=20 && Matrix.length > 0 && Rule.space == "3D"
-                && Positions.flat(1).map((position, index) => (
-                    <Cube key={index}
-                        position={position}
-                        color={getColor(index)}
-                        darkMode={darkMode}
-                        isRendering={currentPoint(Rule.space, Matrix, Rule.lato, index)}
-                        cellShadingMode={cellShadingMode}
-                        wireframeMode={wireframeMode} />
-                ))}
+            {Positions.length > 0 && Rule.lato && Rule.lato <= 20 && Matrix.length > 0 && Rule.space == "3D"
+                && <>
+                    {Grid && <BoxEdge offset={[0, 0, 0]} size={(Rule.lato * 2) + 0.25 * (Rule.lato + 1)} position={[4, 4, 6.2]} />
+                    }
+                    {Positions.flat(1).map((position, index) => (
+
+                        <Cube key={index}
+                            position={position}
+                            color={Color}
+                            darkMode={darkMode}
+                            isRendering={currentPoint(Rule.space, Matrix, Rule.lato, index)}
+                            cellShadingMode={cellShadingMode}
+                            wireframeMode={wireframeMode} />
+                    ))}
+                </>
+            }
+
 
 
             {Positions.length > 0 && Rule.lato && Matrix.length > 0 && Rule.space == "2D"
                 && Positions.map((position, index) => (
                     <Cube key={index}
                         position={position}
-                        color={getColor(index)}
+                        color={Color}
                         darkMode={darkMode}
                         isRendering={currentPoint(Rule.space, Matrix, Rule.lato, index)}
                         cellShadingMode={cellShadingMode}
                         wireframeMode={wireframeMode} />
                 ))}
 
-            {Rule.space == "3D" && Rule.lato >20 &&<Instances lato={Rule.lato} Matrix={Matrix} darkMode={darkMode} wireframeMode= {wireframeMode} color={getColor(0)} />}
+            {Rule.space == "3D" && Rule.lato > 20 &&
+                <>
+                    {Grid && <BoxEdge size={(Rule.lato * 1) + 0.25 * (Rule.lato + 1)} offset={[0, Rule.lato * 1.6, 0]} />}
+                    <Instances lato={Rule.lato} Matrix={Matrix} darkMode={darkMode} wireframeMode={wireframeMode} color={Color} />
+                </>}
             <OrbitControls />
             <EffectComposer>
                 <Bloom
