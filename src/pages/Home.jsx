@@ -24,7 +24,8 @@ import {
   grid,
 } from "@chakra-ui/react";
 import ColorPicker from '../components/ColorPicker';
-import { EffectComposer, Pixelation } from '@react-three/postprocessing';
+import { EffectComposer, Glitch, Pixelation } from '@react-three/postprocessing';
+import { GlitchMode } from 'postprocessing';
 
 const theme = extendTheme({
   styles: {
@@ -135,7 +136,7 @@ const Home = () => {
     return (
       <ChakraProvider theme={theme}>
         <Box
-          style={{width:"30vw", maxHeight:"90vh", overflowY:"auto"}}
+          style={{width:"30vw", maxHeight:"90vh", overflowY:"auto", color:"white"}}
           position='absolute'
           zIndex={2}
           top={12}
@@ -179,11 +180,25 @@ const Home = () => {
               </Select>
             </FormControl>
             <FormControl>
-              <FormLabel>Neigh:</FormLabel>
+              <FormLabel>Neighborhood :</FormLabel>
               <Select value={Rule.neigh} onChange={(e) => changeRule("neigh", e.target.value)}>
-                <option value="M">M</option>
-                <option value="VN">VN</option>
+                <option value="M">Moore</option>
+                <option value="VN">Von Neumann</option>
               </Select>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Speed: {speed} ms</FormLabel>
+              <Slider
+                min={0}
+                max={100}
+                value={sliderValue}
+                onChange={(value) => setSliderValue(value)}
+              >
+                <SliderTrack>
+                  <SliderFilledTrack />
+                </SliderTrack>
+                <SliderThumb />
+              </Slider>
             </FormControl>
             <FormControl>
               <FormLabel>Size: {Rule.lato}</FormLabel>
@@ -200,7 +215,7 @@ const Home = () => {
               </Slider>
             </FormControl>
             <FormControl>
-              <FormLabel>Underpopulate: {Rule.underpopulated}</FormLabel>
+              <FormLabel>Underpopulated: {Rule.underpopulated}</FormLabel>
               <Slider
                 min={0}
                 max={10}
@@ -255,20 +270,7 @@ const Home = () => {
                 <SliderThumb />
               </Slider>
             </FormControl>
-            <FormControl>
-              <FormLabel>Speed: {speed} ms</FormLabel>
-              <Slider
-                min={0}
-                max={100}
-                value={sliderValue}
-                onChange={(value) => setSliderValue(value)}
-              >
-                <SliderTrack>
-                  <SliderFilledTrack />
-                </SliderTrack>
-                <SliderThumb />
-              </Slider>
-            </FormControl>
+          
           </VStack>
         </Box>
         <Box position="absolute" top="15" left="5" zIndex={10}>
@@ -279,7 +281,6 @@ const Home = () => {
           camera={{ position: [35, 10, 10], near: 0.1, far: 1000 }}
           style={{ width: "100vw", height: "100vh", zIndex: "1" }}
         >
-
           <color attach={"background"} args={[darkMode ? "black" : "#bce4e5"]} />
           <Perf position="bottom-left" />
           <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)} />
@@ -306,6 +307,15 @@ const Home = () => {
             />
             {/* <EffectComposer>
           <Pixelation granularity={5} />
+        </EffectComposer> */}
+        {/* <EffectComposer>
+          <Glitch  delay={[1.5, 3.5]} // min and max glitch delay
+    duration={[0.6, 1.0]} // min and max glitch duration
+    strength={[0.3, 1.0]} // min and max glitch strength
+    mode={GlitchMode.SPORADIC} // glitch mode
+    active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
+    ratio={0.85} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
+    />
         </EffectComposer> */}
           </Suspense>
         </Canvas>

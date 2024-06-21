@@ -83,7 +83,7 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Ru
             {<ambientLight intensity={darkMode ? 0.2 : 0.5} />}
             {Positions.length > 0 && Rule.lato && Rule.lato <= 20 && Matrix.length > 0 && Rule.space == "3D"
                 && <>
-                    {Grid && <BoxEdge offset={[0, 0, 0]} size={(Rule.lato * 1.8) + 0.25 * (Rule.lato + 1)} position={[4, 4, 6.2]} />
+                    {Grid && <BoxEdge offset={[-1.1, 0, -0.7]} size={(Rule.lato * 1.8) + 0.25 * (Rule.lato + 1)} position={[4, 4, 6.2]} />
                     }
                     {Positions.flat(1).map((position, index) => (
 
