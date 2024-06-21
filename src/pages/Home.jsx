@@ -135,7 +135,7 @@ const Home = () => {
     return (
       <ChakraProvider theme={theme}>
         <Box
-          style={{width:"20vw", maxHeight:"100vh", overflowY:"auto"}}
+          style={{width:"30vw", maxHeight:"90vh", overflowY:"auto"}}
           position='absolute'
           zIndex={2}
           top={12}
