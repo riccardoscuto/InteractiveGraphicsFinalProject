@@ -48,6 +48,7 @@ const Home = () => {
   const [wireframeMode, setWireframeMode] = useState(false);
   const [Running, setRunning] = useState(false);
   const [sliderValue, setSliderValue] = useState(50);
+  const [slideAnim, setSlideAnim] = useState(50);
   const speed = 2000 - (sliderValue * 19);
   const [matrixType, setMatrixType] = useState("random");
   const [Space, setSpace] = useState("3D");
@@ -136,10 +137,25 @@ const Home = () => {
   if (Lato > 0)
     return (
       <ChakraProvider theme={theme}>
-       <Menu Running={Running} changeRule={changeRule} darkMode={darkMode} wireframeMode={wireframeMode} Rules={Rules} Rule={Rule} Grid={Grid} handleChange={handleChange}
-       speed={speed} sliderValue={sliderValue} setSliderValue={setSliderValue} setDarkMode={setDarkMode} setWireframeMode={setWireframeMode} setGrid={setGrid} setRunning={setRunning}/>
+        <Menu Running={Running} changeRule={changeRule} darkMode={darkMode} wireframeMode={wireframeMode} Rules={Rules} Rule={Rule} Grid={Grid} handleChange={handleChange}
+          speed={speed} sliderValue={sliderValue} setSliderValue={setSliderValue} setDarkMode={setDarkMode} setWireframeMode={setWireframeMode} setGrid={setGrid} setRunning={setRunning} />
         <Box position="absolute" top="15" left="5" zIndex={10}>
           <ColorPicker colors={palette} color={Color} setColor={setColor} />
+
+        </Box>
+        <Box w="35%" top={1000}  left={600} align = "center" justify =" center" alignItems={"center"} position={"absolute"} zIndex={10}>
+
+          <Slider
+            min={1}
+            max={100}
+            value={slideAnim}
+            onChange={(value) => { setSlideAnim(value); setRunning(false) }}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
         </Box>
         <Canvas
           dpr={dpr}
@@ -169,11 +185,12 @@ const Home = () => {
               speed={speed}
               Spawn={Spawn}
               Color={Color}
+              slideAnim={slideAnim}
             />
             {/* <EffectComposer>
           <Pixelation granularity={5} />
         </EffectComposer> */}
-        {/* <EffectComposer>
+            {/* <EffectComposer>
           <Glitch  delay={[1.5, 3.5]} // min and max glitch delay
     duration={[0.6, 1.0]} // min and max glitch duration
     strength={[0.3, 1.0]} // min and max glitch strength

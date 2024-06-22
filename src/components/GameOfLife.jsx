@@ -7,9 +7,13 @@ import { currentPoint, generationMatrix, generationPosition, runSimulation, gene
 import { useFrame } from '@react-three/fiber';
 import { Instances } from './Instances';
 import BoxEdge from './BoxEdge';
-export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Running, Rule, Grid, Color }) => {
+export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Running, Rule, Grid, Color, slideAnim }) => {
     const [Positions, setPositions] = useState(generationPosition(Rule.space, Rule.lato));
     const [Matrix, setMatrix] = useState(generationMatrix(Rule.space, Rule.lato));
+    const [Animation, setAnimation] = useState([]);
+    const [animIndex, setAnimIndex] = useState(0);
+    let animation= [];
+    // let animIndex = 0;
     let lastIndex = null;
     useEffect(() => {
         let newMatrix;
@@ -34,14 +38,37 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Ru
         } else {
             newMatrix = generationRandomMatrix(Rule.space, Rule.lato);
         }
+        animation=[];
+        setAnimIndex(0);
+        animation[animIndex]=newMatrix;
+        setAnimation(animation);
         setMatrix(newMatrix);
     }, [Rule])
+    useEffect(() => {
+        if(slideAnim > animIndex){
+            console.log("anima", Animation[animIndex])
+            console.log("indice", animIndex)
+            if(Animation[animIndex])
+                setMatrix(Animation[animIndex])
+        }else{
+            if(Animation[slideAnim])
+                setMatrix(Animation[slideAnim])
+            console.log("slider", slideAnim)
+            console.log("anima222", Animation[slideAnim])
+        }
+        }, [slideAnim])
+    
     let lastFrame = Date.now();
     useFrame(() => {
         if (Running && Date.now() - lastFrame > speed) {
             const newMatrix = runSimulation(Rule.space, Rule.lato, Matrix, Rule);
             setMatrix(newMatrix);
+            let animation = Animation; 
+            animation[animIndex]=newMatrix;
+            setAnimIndex( animIndex+1 %100);
             lastFrame = Date.now();
+            setAnimation([...animation])
+
         }
     });
 
@@ -81,7 +108,7 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Ru
         <>
             {<directionalLight position={[1, 1, 1]} intensity={darkMode ? 0.5 : 2} />}
             {<ambientLight intensity={darkMode ? 0.2 : 0.5} />}
-            {Positions.length > 0 && Rule.lato && Rule.lato <= 20 && Matrix.length > 0 && Rule.space == "3D"
+            {Positions && Positions.length > 0 && Rule.lato && Rule.lato <= 20 && Matrix.length > 0 && Rule.space == "3D"
                 && <>
                     {Grid && <BoxEdge offset={[-1.1, 0, -0.7]} size={(Rule.lato * 1.8) + 0.25 * (Rule.lato + 1)} position={[4, 4, 6.2]} />
                     }
@@ -97,7 +124,7 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Ru
                     ))}
                 </>
             }
-            {Positions.length > 0 && Rule.lato && Matrix.length > 0 && Rule.space == "2D"
+            {Positions && Positions.length > 0 && Rule.lato && Matrix.length > 0 && Rule.space == "2D"
                 && Positions.map((position, index) => (
                     <Cube key={index}
                         position={position}
@@ -121,6 +148,7 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Ru
                     intensity={darkMode ? 1 : 0}
                 />
             </EffectComposer>
+            
         </>
     )
 }

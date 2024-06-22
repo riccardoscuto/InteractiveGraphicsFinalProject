@@ -83,6 +83,7 @@ function Menu({Running, changeRule, darkMode, wireframeMode, Rules, Grid, handle
                 </SliderTrack>
                 <SliderThumb />
               </Slider>
+              
             </FormControl>
             <FormControl>
               <FormLabel>Size: {Rule.lato}</FormLabel>
