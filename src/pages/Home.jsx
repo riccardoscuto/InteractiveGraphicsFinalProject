@@ -48,7 +48,7 @@ const Home = () => {
   const [wireframeMode, setWireframeMode] = useState(false);
   const [Running, setRunning] = useState(false);
   const [sliderValue, setSliderValue] = useState(50);
-  const [slideAnim, setSlideAnim] = useState(50);
+  const [slideAnim, setSlideAnim] = useState(0);
   const speed = 2000 - (sliderValue * 19);
   const [matrixType, setMatrixType] = useState("random");
   const [Space, setSpace] = useState("3D");
@@ -143,7 +143,7 @@ const Home = () => {
           <ColorPicker colors={palette} color={Color} setColor={setColor} />
 
         </Box>
-        <Box w="35%" top={1000}  left={600} align = "center" justify =" center" alignItems={"center"} position={"absolute"} zIndex={10}>
+        <Box w="35%" top={5}  left={100} align = "center" justify =" center" alignItems={"center"} position={"absolute"} zIndex={10}>
 
           <Slider
             min={1}
