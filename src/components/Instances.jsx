@@ -1,6 +1,12 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import * as THREE from "three"
 import { currentPoint } from "../functions/cellarAutomata3D"
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
+import { useLoader } from "@react-three/fiber"
+import cubeScene from '../assets/3d/cube.obj';
+
+
+
 
 export function Instances({ lato, temp = new THREE.Object3D(), Matrix, darkMode, wireframeMode, color }) {
     const instancedMeshRef = useRef()
@@ -15,18 +21,44 @@ export function Instances({ lato, temp = new THREE.Object3D(), Matrix, darkMode,
         };
         instancedMeshRef.current.instanceMatrix.needsUpdate = true
     }, [lato, Matrix])
-    return (
-        <instancedMesh ref={instancedMeshRef} args={[null, null, lato ** 3]} >
-            <boxGeometry />
-            <meshToonMaterial
-                wireframe={wireframeMode}
-                color={color}
-                emissive={darkMode ? color : color}
-                emissiveIntensity={darkMode ? 1.5 : 0}
-            />
-        </instancedMesh>
-    )
-}
+    const originalCube = useLoader(OBJLoader, cubeScene);
+
+    // const geometry = new THREE.Geometry().fromBufferGeometry(originalCube.geometry);
+    // geometry.computeFaceNormals()
+    // geometry.mergeVertices();
+    // geometry.computeVertexNormals();
+    // const bufferGeometry = new THREE.BufferGeometry().fromGeometry(geometry)
+    const cube = useMemo(() => {
+        const clonedCube = originalCube.clone();
+        clonedCube.traverse((child) => {
+            if (child.isMesh) {
+                child.geometry.computeBoundingBox();
+                child.geometry.computeBoundingSphere();
+                
+            }
+        }
+        );
+        return clonedCube.children[0].geometry;
+    }, [originalCube, color, darkMode, wireframeMode]);
+    
+    const material = new THREE.MeshToonMaterial( { color: color, wireframe:wireframeMode } );
+    
+console.log("cubando", cube)
+        return (
+            <instancedMesh ref={instancedMeshRef}  args={[cube, material, lato ** 3]} >
+                
+                {/* { <boxGeometry /> */}
+                {/* <meshToonMaterial
+                    wireframe={wireframeMode}
+                    color={color}
+                    emissive={darkMode ? color : color}
+                    emissiveIntensity={darkMode ? 1.5 : 0}
+                /> */}
+
+
+            </instancedMesh>
+        )
+    }
 
 function getPosition(index, lato) {
     index = index + lato ** 3 * 1;

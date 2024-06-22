@@ -24,8 +24,8 @@ import {
   grid,
 } from "@chakra-ui/react";
 import ColorPicker from '../components/ColorPicker';
-import { EffectComposer, Glitch, Pixelation } from '@react-three/postprocessing';
-import { GlitchMode } from 'postprocessing';
+import { DotScreen, EffectComposer, Glitch, Pixelation } from '@react-three/postprocessing';
+import { BlendFunction, GlitchMode } from 'postprocessing';
 
 const theme = extendTheme({
   styles: {
@@ -278,7 +278,7 @@ const Home = () => {
         </Box>
         <Canvas
           dpr={dpr}
-          camera={{ position: [35, 10, 10], near: 0.1, far: 1000 }}
+          camera={{ position: [100, 80, 10], near: 0.1, far: 1000 }}
           style={{ width: "100vw", height: "100vh", zIndex: "1" }}
         >
           <color attach={"background"} args={[darkMode ? "black" : "#bce4e5"]} />
@@ -317,6 +317,14 @@ const Home = () => {
     ratio={0.85} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
     />
         </EffectComposer> */}
+         {/* <EffectComposer>
+          <DotScreen
+            blendFunction={BlendFunction.NORMAL} // blend mode
+            angle={Math.PI * 0.5} // angle of the dot pattern
+            scale={1.0} // scale of the dot pattern
+          />
+        </EffectComposer> */}
+        
           </Suspense>
         </Canvas>
       </ChakraProvider>
