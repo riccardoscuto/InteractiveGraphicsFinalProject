@@ -104,7 +104,7 @@ function Menu({Running, changeRule, darkMode, wireframeMode, Rules, Grid, handle
               <FormLabel>Underpopulated: {Rule.underpopulated}</FormLabel>
               <Slider
                 min={0}
-                max={10}
+                max={Rule.neigh == "M" ? 26 :6}
                 value={Rule.underpopulated}
                 onChange={(value) => changeRule("underpopulated", value)}
               >
@@ -118,7 +118,7 @@ function Menu({Running, changeRule, darkMode, wireframeMode, Rules, Grid, handle
               <FormLabel>Overpopulated: {Rule.overpopulated}</FormLabel>
               <Slider
                 min={0}
-                max={10}
+                max={Rule.neigh == "M" ? 26 :6}
                 value={Rule.overpopulated}
                 onChange={(value) => changeRule("overpopulated", value)}
               >
