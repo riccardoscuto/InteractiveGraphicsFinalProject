@@ -34,7 +34,7 @@ export const generationRandomMatrix = (lato) => {
         for (let y = 0; y < lato; y++) {
             newMatrix[x][y] = [];
             for (let z = 0; z < lato; z++) {
-                newMatrix[x][y][z] = Math.random() < 0.5 ? true : false;
+                newMatrix[x][y][z] = Math.random() < 0.005 ? true : false;
             }
         }
     }

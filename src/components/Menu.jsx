@@ -43,7 +43,7 @@ function Menu({Running, changeRule, darkMode, wireframeMode, Rules, Grid, handle
                 {grid ? " Grid" : " Grid"}
               </Button>
               <Button colorScheme={Rule.alwaysAlive ? "orange" : "teal"} onClick={() => changeRule("alwaysAlive",!Rule.alwaysAlive)}>
-                {Rule.alwaysAlive ? "See Dead Cells" : "See Dead Cells"}
+                {Rule.alwaysAlive ? "Always Alive" : "Always Alive"}
               </Button>
               <Stack spacing={5} direction='row'>
               </Stack>

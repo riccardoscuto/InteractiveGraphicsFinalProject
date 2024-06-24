@@ -453,7 +453,21 @@
             [11, 11, 10],
             [11, 12, 10]
         ]
+    },
+    {
+        "text": "dsad",
+        "lato": 60,
+        "birth": 5,
+        "underpopulated": 0,
+        "overpopulated": 5,
+        "stable": 4,
+        "space": "3D",
+        "neigh": "M",
+        "starting": "random"
+
     }
+
+
 
 
 

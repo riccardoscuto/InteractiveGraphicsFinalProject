@@ -34,7 +34,6 @@ const Home = () => {
   const [dpr, setDpr] = useState(0.5)
   const [cubeColors, setCubeColors] = useState()
   const [darkMode, setDarkMode] = useState(false);
-  const [cellShadingMode, setCellShadingMode] = useState(false);
   const [wireframeMode, setWireframeMode] = useState(false);
   const [Running, setRunning] = useState(false);
   const [sliderValue, setSliderValue] = useState(50);
@@ -143,25 +142,13 @@ const Home = () => {
             <GameOfLife
               Grid={Grid}
               Rule={Rule}
-              Lato={Lato}
-              Space={Space}
-              cellShadingMode={cellShadingMode}
               darkMode={darkMode}
               wireframeMode={wireframeMode}
-              colorMode={colorMode}
               Running={Running}
-              matrixType={matrixType}
-              Neigh={Neigh}
-              Underpopulated={Underpopulated}
-              Overpopulated={Overpopulated}
-              Stable={Stable}
-              Birth={Birth}
               speed={speed}
-              Spawn={Spawn}
               Color={Color}
               slideAnim={slideAnim}
-              setSlideAnim={setSlideAnim}
-              
+              setSlideAnim={setSlideAnim} 
             />
           </Suspense>
         </Canvas>

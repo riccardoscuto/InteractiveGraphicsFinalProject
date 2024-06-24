@@ -1,5 +1,5 @@
-import * as sd from '../functions/cellarAutomata2D';
-import * as td from "../functions/cellarAutomata3D";
+import * as sd from './cellularAutomata2D';
+import * as td from "./cellularAutomata3D";
 
 export function runSimulation(space, lato, matrix, customRule) {
     switch (space) {

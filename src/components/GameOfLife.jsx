@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import Cube from '../models/Cube';
-import { currentPoint, generationMatrix, generationPosition, runSimulation, generationRandomMatrix } from '../functions/cellarAutomata';
+import { currentPoint, generationMatrix, generationPosition, runSimulation, generationRandomMatrix } from '../functions/cellularAutomata';
 import { useFrame } from '@react-three/fiber';
 import { Instances } from './Instances';
 import BoxEdge from './BoxEdge';
-export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, setSlideAnim, speed, Running, Rule, Grid, Color, slideAnim }) => {
+export const GameOfLife = ({ darkMode, wireframeMode, setSlideAnim, speed, Running, Rule, Grid, Color, slideAnim }) => {
     const [Positions, setPositions] = useState(generationPosition(Rule.space, Rule.lato));
     const [Matrix, setMatrix] = useState(generationMatrix(Rule.space, Rule.lato));
     const [Animation, setAnimation] = useState([]);
@@ -103,7 +103,6 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, setSlideA
                             color={Color}
                             darkMode={darkMode}
                             isRendering={currentPoint(Rule.space, Matrix, Rule.lato, index)}
-                            cellShadingMode={cellShadingMode}
                             wireframeMode={wireframeMode} />
                     ))}
                 </>
@@ -115,7 +114,6 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, setSlideA
                         color={Color}
                         darkMode={darkMode}
                         isRendering={currentPoint(Rule.space, Matrix, Rule.lato, index)}
-                        cellShadingMode={cellShadingMode}
                         wireframeMode={wireframeMode} />
                 ))}
             {Rule.space == "3D" && Rule.lato > 20 &&

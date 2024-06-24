@@ -13,7 +13,7 @@ const Cube = (props) => {
                 child.material = new MeshToonMaterial({
                     wireframe: props.wireframeMode,
                     color: props.color,
-                    emissive: props.darkMode ? props.color : 0,
+                    emissive: props.darkMode ? props.color : undefined,
                     emissiveIntensity: props.darkMode ? 1.5 : 0
                 })
             }

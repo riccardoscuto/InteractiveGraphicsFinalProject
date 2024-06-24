@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 import * as THREE from "three"
-import { currentPoint } from "../functions/cellarAutomata3D"
+import { currentPoint } from "../functions/cellularAutomata3D"
 
 export function Instances({ lato, temp = new THREE.Object3D(), Matrix, darkMode, wireframeMode, color }) {
     const instancedMeshRef = useRef()
