@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-    ChakraProvider,
     Box,
     Button,
     Select,
@@ -43,12 +42,15 @@ function Menu({Running, changeRule, darkMode, wireframeMode, Rules, Grid, handle
               <Button colorScheme={Grid ? "orange" : "teal"} onClick={() => setGrid(!Grid)}>
                 {grid ? " Grid" : " Grid"}
               </Button>
+              <Button colorScheme={Rule.alwaysAlive ? "orange" : "teal"} onClick={() => changeRule("alwaysAlive",!Rule.alwaysAlive)}>
+                {Rule.alwaysAlive ? "See Dead Cells" : "See Dead Cells"}
+              </Button>
               <Stack spacing={5} direction='row'>
               </Stack>
             </HStack>
             <FormControl>
               <FormLabel>Select Rule:</FormLabel>
-              <Select defaultValue={undefined} onChange={handleChange}>
+              <Select defaultValue={undefined} onChange={handleChange} onClick={()=>{setRunning(false)}}>
                 <option value={[]} key={-1}></option>
                 {Rules.map((element, index) => (
                   <option value={index} key={index}>{element.text}</option>

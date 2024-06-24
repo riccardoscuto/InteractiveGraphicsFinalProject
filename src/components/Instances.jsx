@@ -10,9 +10,10 @@ export function Instances({ lato, temp = new THREE.Object3D(), Matrix, darkMode,
                 temp.position.set(...getPosition(i, lato))
                 temp.updateMatrix()
                 temp.scale.set(1, 1, 1);
-                instancedMeshRef.current.setMatrixAt(i, temp.matrix)
             }
+            instancedMeshRef.current.setMatrixAt(i, temp.matrix);
         };
+
         instancedMeshRef.current.instanceMatrix.needsUpdate = true
     }, [lato, Matrix])
     return (

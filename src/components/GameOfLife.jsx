@@ -44,25 +44,27 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, setSlideA
         setMatrix(newMatrix);
     }, [Rule])
     useEffect(() => {
-       
-            if (Animation[slideAnim])
-                setMatrix(Animation[slideAnim])
-            console.log("slider", slideAnim)
-            console.log("anima222", Animation[slideAnim])
-        
+
+        if (Animation[slideAnim])
+            setMatrix(Animation[slideAnim])
+
     }, [slideAnim])
 
     let lastFrame = Date.now();
     useFrame(() => {
         if (Running && Date.now() - lastFrame > speed) {
-            setSlideAnim(prex =>{
-                const newMatrix = runSimulation(Rule.space, Rule.lato, Matrix, Rule);
-                setMatrix(newMatrix);
-                let animation = Animation;
-                animation[prex] = newMatrix;
+            setMatrix(prexMatrix => {
+                const newMatrix = runSimulation(Rule.space, Rule.lato, prexMatrix, Rule);
+                setSlideAnim(prex => {
+                    setAnimation(prexAnim => {
+                    
+                        prexAnim[prex] = newMatrix;
+                        return prexAnim
+                    })
+                    return ((prex + 1) % 100)
+                })
                 lastFrame = Date.now();
-                setAnimation([...animation])
-                return ((prex +  1) % 100)
+                return newMatrix;
             })
         }
     });
@@ -120,7 +122,11 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, setSlideA
                 <>
                     {Grid && <BoxEdge size={(Rule.lato * 1) + 0.25 * (Rule.lato + 1)}
                         offset={[0, Rule.lato * 1.5, -1]} />}
-                    <Instances lato={Rule.lato} Matrix={Matrix} darkMode={darkMode} wireframeMode={wireframeMode} color={Color} />
+                    <Instances lato={Rule.lato}
+                        Matrix={Matrix}
+                        darkMode={darkMode}
+                        wireframeMode={wireframeMode}
+                        color={Color} />
                 </>}
             <OrbitControls />
             <EffectComposer>

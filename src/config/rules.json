@@ -1,5 +1,7 @@
 [{
         "text": "Diamond - 2D",
+        "alwaysAlive": false,
+
         "lato": 18,
         "birth": 3,
         "underpopulated": 2,
@@ -52,6 +54,7 @@
     },
     {
         "text": "Diamond - 3D",
+        "alwaysAlive": false,
         "lato": 20,
         "birth": 3,
         "underpopulated": 2,
@@ -249,6 +252,7 @@
         ]
     }, {
         "text": "Cristal ",
+        "alwaysAlive": true,
         "lato": 31,
         "birth": [1, 3],
         "underpopulated": 0,
@@ -263,6 +267,7 @@
     }, {
 
         "text": "Wave",
+        "alwaysAlive": true,
         "lato": 31,
         "birth": [2, 5],
         "underpopulated": 1,
@@ -279,6 +284,7 @@
         ]
     }, {
         "text": "Expander",
+        "alwaysAlive": true,
         "lato": 31,
         "birth": 1,
         "underpopulated": 2,
@@ -296,6 +302,7 @@
         ]
     }, {
         "text": "Cube Expansion",
+        "alwaysAlive": true,
         "lato": 31,
         "birth": [1, 2, 3],
         "underpopulated": 0,
@@ -315,6 +322,7 @@
         ]
     }, {
         "text": "Half Expansion",
+        "alwaysAlive": true,
         "lato": 25,
         "birth": 1,
         "underpopulated": 2,
@@ -337,7 +345,8 @@
         ]
     },
     {
-        "text": "White Noise Expansio",
+        "text": "White Noise Expansion",
+        "alwaysAlive": true,
         "lato": 30,
         "birth": [3, 3],
         "underpopulated": 0,
@@ -357,6 +366,7 @@
         ]
     }, {
         "text": "Not completed",
+        "alwaysAlive": true,
         "lato": 25,
         "birth": 1,
         "underpopulated": 1,
@@ -375,6 +385,7 @@
         ]
     }, {
         "text": "Crystal Growth with Multiple Spawn Points",
+        "alwaysAlive": true,
         "lato": 60,
         "underpopulated": 1,
         "overpopulated": 1,
@@ -390,7 +401,8 @@
         ]
     },
     {
-        "text": "Slime ",
+        "text": "Slime",
+        "alwaysAlive": true,
         "lato": 90,
         "birth": 3,
         "underpopulated": 1,
@@ -409,6 +421,7 @@
     },
     {
         "text": "Union",
+        "alwaysAlive": true,
         "lato": 31,
         "birth": [1, 2],
         "underpopulated": 3,

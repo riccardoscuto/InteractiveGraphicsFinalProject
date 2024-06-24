@@ -69,6 +69,7 @@ const Home = () => {
     neigh: "M",
     colorMode: "red",
     spawn: [],
+    alwaysAlive:false
   })
   const [Grid, setGrid] = useState(true
   )
@@ -79,7 +80,7 @@ const Home = () => {
     setRule({ ...aux })
   }
   const handleChange = (e) => {
-    const { birth, lato, overpopulated, spawn, stable, underpopulated, neigh, space, starting } = Rules[e.target.value];
+    const { birth, lato, overpopulated, spawn, stable, underpopulated, neigh, space, starting , alwaysAlive} = Rules[e.target.value];
     setRule({
       birth,
       colorMode: Rule.colorMode,
@@ -91,7 +92,8 @@ const Home = () => {
       spawn,
       stable,
       underpopulated,
-      index: e.target.value
+      index: e.target.value,
+      alwaysAlive
     })
   }
   useEffect(() => {
@@ -159,6 +161,7 @@ const Home = () => {
               Color={Color}
               slideAnim={slideAnim}
               setSlideAnim={setSlideAnim}
+              
             />
           </Suspense>
         </Canvas>
