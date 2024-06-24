@@ -158,6 +158,7 @@ const Home = () => {
               Spawn={Spawn}
               Color={Color}
               slideAnim={slideAnim}
+              setSlideAnim={setSlideAnim}
             />
           </Suspense>
         </Canvas>

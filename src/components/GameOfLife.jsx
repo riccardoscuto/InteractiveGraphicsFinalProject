@@ -7,11 +7,11 @@ import { currentPoint, generationMatrix, generationPosition, runSimulation, gene
 import { useFrame } from '@react-three/fiber';
 import { Instances } from './Instances';
 import BoxEdge from './BoxEdge';
-export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Running, Rule, Grid, Color, slideAnim }) => {
+export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, setSlideAnim, speed, Running, Rule, Grid, Color, slideAnim }) => {
     const [Positions, setPositions] = useState(generationPosition(Rule.space, Rule.lato));
     const [Matrix, setMatrix] = useState(generationMatrix(Rule.space, Rule.lato));
     const [Animation, setAnimation] = useState([]);
-    const [animIndex, setAnimIndex] = useState(0);
+    // const [animIndex, setAnimIndex] = useState(0);
     let animation = [];
     let lastIndex = null;
     useEffect(() => {
@@ -38,36 +38,32 @@ export const GameOfLife = ({ darkMode, wireframeMode, cellShadingMode, speed, Ru
             newMatrix = generationRandomMatrix(Rule.space, Rule.lato);
         }
         animation = [];
-        setAnimIndex(0);
-        animation[animIndex] = newMatrix;
+        setSlideAnim(1);
+        animation[0] = newMatrix;
         setAnimation(animation);
         setMatrix(newMatrix);
     }, [Rule])
     useEffect(() => {
-        if (slideAnim > animIndex) {
-            console.log("anima", Animation[animIndex])
-            console.log("indice", animIndex)
-            if (Animation[animIndex])
-                setMatrix(Animation[animIndex])
-        } else {
+       
             if (Animation[slideAnim])
                 setMatrix(Animation[slideAnim])
             console.log("slider", slideAnim)
             console.log("anima222", Animation[slideAnim])
-        }
+        
     }, [slideAnim])
 
     let lastFrame = Date.now();
     useFrame(() => {
         if (Running && Date.now() - lastFrame > speed) {
-            const newMatrix = runSimulation(Rule.space, Rule.lato, Matrix, Rule);
-            setMatrix(newMatrix);
-            let animation = Animation;
-            animation[animIndex] = newMatrix;
-            setAnimIndex(animIndex + 1 % 100);
-            lastFrame = Date.now();
-            setAnimation([...animation])
-
+            setSlideAnim(prex =>{
+                const newMatrix = runSimulation(Rule.space, Rule.lato, Matrix, Rule);
+                setMatrix(newMatrix);
+                let animation = Animation;
+                animation[prex] = newMatrix;
+                lastFrame = Date.now();
+                setAnimation([...animation])
+                return ((prex +  1) % 100)
+            })
         }
     });
 
