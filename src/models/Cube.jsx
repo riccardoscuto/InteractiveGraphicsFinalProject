@@ -1,7 +1,7 @@
 import { useLoader } from '@react-three/fiber';
 import React, { useMemo } from 'react';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import {MeshToonMaterial,  MeshStandardMaterial, MeshBasicMaterial, WireframeGeometry, LineSegments, LineBasicMaterial, MeshNormalMaterial } from 'three';
+import {MeshToonMaterial } from 'three';
 import cubeScene from '../assets/3d/cube.obj';
 
 const Cube = (props) => {

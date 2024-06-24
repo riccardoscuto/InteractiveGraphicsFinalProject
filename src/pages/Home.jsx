@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
-import { OrbitControls, PerformanceMonitor } from "@react-three/drei";
+import { PerformanceMonitor } from "@react-three/drei";
 import Loader from '../components/Loader';
 import Rules from "../config/rules.json";
 import { Perf } from 'r3f-perf'
@@ -9,23 +9,13 @@ import { GameOfLife } from '../components/GameOfLife';
 import {
   ChakraProvider,
   Box,
-  Button,
-  Select,
   Slider,
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
-  FormControl,
-  FormLabel,
-  VStack,
-  HStack,
   extendTheme,
-  Stack,
-  grid,
 } from "@chakra-ui/react";
 import ColorPicker from '../components/ColorPicker';
-import { EffectComposer, Glitch, Pixelation } from '@react-three/postprocessing';
-import { GlitchMode } from 'postprocessing';
 import Menu from '../components/Menu';
 
 const theme = extendTheme({
@@ -88,8 +78,6 @@ const Home = () => {
     aux[nameProp] = valueProp;
     setRule({ ...aux })
   }
-
-
   const handleChange = (e) => {
     const { birth, lato, overpopulated, spawn, stable, underpopulated, neigh, space, starting } = Rules[e.target.value];
     setRule({
@@ -110,9 +98,7 @@ const Home = () => {
     const handleResize = () => {
       setCanvasSize({ width: window.innerWidth, height: window.innerHeight });
     };
-
     window.addEventListener('resize', handleResize);
-
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -122,18 +108,6 @@ const Home = () => {
       setCubeColors(colors.map(() => "grey"));
     }
   }, [wireframeMode]);
-
-  const innerBoxStyles = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    boxSize: 'full',
-    color: 'white',
-    textShadow: '0 0 20px black',
-    fontWeight: 'bold',
-    fontSize: '20px',
-  }
   if (Lato > 0)
     return (
       <ChakraProvider theme={theme}>
@@ -141,10 +115,8 @@ const Home = () => {
           speed={speed} sliderValue={sliderValue} setSliderValue={setSliderValue} setDarkMode={setDarkMode} setWireframeMode={setWireframeMode} setGrid={setGrid} setRunning={setRunning} />
         <Box position="absolute" top="15" left="5" zIndex={10}>
           <ColorPicker colors={palette} color={Color} setColor={setColor} />
-
         </Box>
-        <Box w="35%" top={5}  left={100} align = "center" justify =" center" alignItems={"center"} position={"absolute"} zIndex={10}>
-
+        <Box w="35%" top={5} left={100} align="center" justify=" center" alignItems={"center"} position={"absolute"} zIndex={10}>
           <Slider
             min={1}
             max={100}
@@ -159,7 +131,7 @@ const Home = () => {
         </Box>
         <Canvas
           dpr={dpr}
-          camera={{ position: [35, 10, 10], near: 0.1, far: 1000 }}
+          camera={{ position: [120, 20, 10], near: 0.1, far: 1000 }}
           style={{ width: "100vw", height: "100vh", zIndex: "1" }}
         >
           <color attach={"background"} args={[darkMode ? "black" : "#bce4e5"]} />
@@ -187,18 +159,6 @@ const Home = () => {
               Color={Color}
               slideAnim={slideAnim}
             />
-            {/* <EffectComposer>
-          <Pixelation granularity={5} />
-        </EffectComposer> */}
-            {/* <EffectComposer>
-          <Glitch  delay={[1.5, 3.5]} // min and max glitch delay
-    duration={[0.6, 1.0]} // min and max glitch duration
-    strength={[0.3, 1.0]} // min and max glitch strength
-    mode={GlitchMode.SPORADIC} // glitch mode
-    active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
-    ratio={0.85} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
-    />
-        </EffectComposer> */}
           </Suspense>
         </Canvas>
       </ChakraProvider>

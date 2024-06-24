@@ -12,7 +12,6 @@ import {
     FormLabel,
     VStack,
     HStack,
-    extendTheme,
     Stack,  
     grid,
   } from "@chakra-ui/react";
