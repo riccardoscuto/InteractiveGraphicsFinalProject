@@ -39,6 +39,11 @@ function Menu({Running, changeRule, darkMode, wireframeMode, Rules, Grid, handle
               <Button colorScheme={wireframeMode ? "orange" : "teal"} onClick={() => setWireframeMode(!wireframeMode)}>
                 {wireframeMode ? " Wireframe" : " Wireframe"}
               </Button>
+             
+            </HStack>
+            <VStack spacing={4} align='start'>
+            <HStack>
+              
               <Button colorScheme={Grid ? "orange" : "teal"} onClick={() => setGrid(!Grid)}>
                 {grid ? " Grid" : " Grid"}
               </Button>
@@ -48,6 +53,7 @@ function Menu({Running, changeRule, darkMode, wireframeMode, Rules, Grid, handle
               <Stack spacing={5} direction='row'>
               </Stack>
             </HStack>
+            </VStack>
             <FormControl>
               <FormLabel>Select Rule:</FormLabel>
               <Select defaultValue={undefined} onChange={handleChange} onClick={()=>{setRunning(false)}}>
