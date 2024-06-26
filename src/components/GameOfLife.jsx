@@ -4,17 +4,19 @@ import { OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import Cube from '../models/Cube';
 import { currentPoint, generationMatrix, generationPosition, runSimulation, generationRandomMatrix } from '../functions/cellularAutomata';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { Instances } from './Instances';
 import BoxEdge from './BoxEdge';
 export const GameOfLife = ({ darkMode, wireframeMode, setSlideAnim, speed, Running, Rule, Grid, Color, slideAnim }) => {
     const [Positions, setPositions] = useState(generationPosition(Rule.space, Rule.lato));
     const [Matrix, setMatrix] = useState(generationMatrix(Rule.space, Rule.lato));
     const [Animation, setAnimation] = useState([]);
+    const {camera } = useThree();
     // const [animIndex, setAnimIndex] = useState(0);
     let animation = [];
     let lastIndex = null;
     useEffect(() => {
+        camera.position.set(...Rule.cameraPosition);
         let newMatrix;
         let newPositions = generationPosition(Rule.space, Rule.lato);
         setPositions(newPositions)

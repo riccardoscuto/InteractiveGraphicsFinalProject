@@ -1,7 +1,6 @@
 [{
         "text": "Diamond - 2D",
         "alwaysAlive": false,
-
         "lato": 18,
         "birth": 3,
         "underpopulated": 2,
@@ -9,9 +8,9 @@
         "stable": 2,
         "space": "2D",
         "neigh": "M",
+        "cameraPosition": [50, 20, 120],
         "starting": "fixed",
         "spawn": [
-
             [7, 3, 1],
             [8, 3, 1],
             [9, 3, 1],
@@ -54,6 +53,7 @@
     },
     {
         "text": "Diamond - 3D",
+        "cameraPosition": [120, 20, 10],
         "alwaysAlive": false,
         "lato": 20,
         "birth": 3,
@@ -64,7 +64,6 @@
         "neigh": "M",
         "starting": "fixed",
         "spawn": [
-
             [7, 3, 9],
             [8, 3, 9],
             [9, 3, 9],
@@ -139,11 +138,11 @@
             [8, 11, 8],
             [8, 11, 9],
             [8, 11, 10]
-
         ]
     },
     {
         "text": "Oscillator-2D",
+        "cameraPosition": [30, 20, 10],
         "lato": 4,
         "birth": 3,
         "underpopulated": 2,
@@ -157,10 +156,9 @@
             [2, 1],
             [3, 1]
         ]
-
     }, {
-
         "text": "Arrow",
+        "cameraPosition": [60, 20, 10],
         "lato": 4,
         "birth": 1,
         "underpopulated": 1,
@@ -175,8 +173,8 @@
             [3, 0, 0]
         ]
     }, {
-
         "text": "Center Expansion",
+        "cameraPosition": [70, 20, 10],
         "lato": 10,
         "birth": 3,
         "underpopulated": 2,
@@ -197,9 +195,9 @@
             [5, 4, 5],
             [5, 5, 5]
         ]
-
     }, {
         "text": "Loading",
+        "cameraPosition": [120, 20, 10],
         "lato": 4,
         "birth": 2,
         "underpopulated": 1,
@@ -215,6 +213,7 @@
         ]
     }, {
         "text": "Oscillator-3D",
+        "cameraPosition": [120, 20, 10],
         "lato": 10,
         "birth": 3,
         "underpopulated": 2,
@@ -231,6 +230,7 @@
     },
     {
         "text": "Symmetrical Oscillators",
+        "cameraPosition": [120, 20, 10],
         "lato": 16,
         "birth": 3,
         "underpopulated": 1,
@@ -252,6 +252,7 @@
         ]
     }, {
         "text": "Cristal ",
+        "cameraPosition": [120, 100, 30],
         "alwaysAlive": true,
         "lato": 31,
         "birth": [1, 3],
@@ -268,6 +269,7 @@
 
         "text": "Wave",
         "alwaysAlive": true,
+        "cameraPosition": [120, 100, 30],
         "lato": 31,
         "birth": [2, 5],
         "underpopulated": 1,
@@ -285,6 +287,7 @@
     }, {
         "text": "Expander",
         "alwaysAlive": true,
+        "cameraPosition": [120, 100, 30],
         "lato": 31,
         "birth": 1,
         "underpopulated": 2,
@@ -303,6 +306,7 @@
     }, {
         "text": "Cube Expansion",
         "alwaysAlive": true,
+        "cameraPosition": [120, 100, 30],
         "lato": 31,
         "birth": [1, 2, 3],
         "underpopulated": 0,
@@ -324,6 +328,7 @@
         "text": "Half Expansion",
         "alwaysAlive": true,
         "lato": 25,
+        "cameraPosition": [120, 100, 30],
         "birth": 1,
         "underpopulated": 2,
         "overpopulated": 3,
@@ -347,6 +352,7 @@
     {
         "text": "White Noise Expansion",
         "alwaysAlive": true,
+        "cameraPosition": [120, 100, 30],
         "lato": 30,
         "birth": [3, 3],
         "underpopulated": 0,
@@ -367,6 +373,7 @@
     }, {
         "text": "Not completed",
         "alwaysAlive": true,
+        "cameraPosition": [120, 100, 30],
         "lato": 25,
         "birth": 1,
         "underpopulated": 1,
@@ -386,6 +393,7 @@
     }, {
         "text": "Crystal Growth with Multiple Spawn Points",
         "alwaysAlive": true,
+        "cameraPosition": [200, 200, 50],
         "lato": 60,
         "underpopulated": 1,
         "overpopulated": 1,
@@ -403,6 +411,7 @@
     {
         "text": "Slime",
         "alwaysAlive": true,
+        "cameraPosition": [300, 300, 100],
         "lato": 90,
         "birth": 3,
         "underpopulated": 1,
@@ -422,6 +431,7 @@
     {
         "text": "Union",
         "alwaysAlive": true,
+        "cameraPosition": [120, 100, 30],
         "lato": 31,
         "birth": [1, 2],
         "underpopulated": 3,
@@ -437,6 +447,7 @@
     },
     {
         "text": "Barberpole",
+        "cameraPosition": [120, 100, 30],
         "lato": 22,
         "birth": [3, 3],
         "underpopulated": 1,
@@ -454,10 +465,10 @@
             [11, 12, 10]
         ]
     },
-
     {
         "text": "Empty Cube",
         "alwaysAlive": false,
+        "cameraPosition": [300, 300, 100],
         "lato": 70,
         "birth": [1, 3],
         "underpopulated": 0,
@@ -470,10 +481,10 @@
             [35, 35, 35]
         ]
     },
-
     {
         "text": "Twin Exa",
         "alwaysAlive": false,
+        "cameraPosition": [300, 300, 100],
         "lato": 60,
         "birth": [3, 5],
         "underpopulated": 2,
@@ -493,6 +504,7 @@
     {
         "text": "Empty  Rhombus",
         "alwaysAlive": false,
+        "cameraPosition": [180, 180, 80],
         "lato": 50,
         "birth": [1, 2],
         "underpopulated": 1,
@@ -508,7 +520,90 @@
             [24, 26, 25],
             [26, 24, 25]
         ]
+    },
+    {
+        "text": "Clustered Growth",
+        "alwaysAlive": false,
+        "cameraPosition": [300, 300, 100],
+        "lato": 80,
+        "birth": [2, 5],
+        "underpopulated": 1,
+        "overpopulated": 6,
+        "stable": 4,
+        "space": "3D",
+        "neigh": "M",
+        "starting": "fixed",
+        "spawn": [
+            [40, 40, 40],
+            [39, 40, 40],
+            [41, 40, 40],
+            [40, 39, 40],
+            [40, 41, 40],
+            [40, 40, 39],
+            [40, 40, 41]
+        ]
+    },
+    {
+        "text": "Intermittent Burst",
+        "alwaysAlive": false,
+        "cameraPosition": [300, 300, 100],
+        "lato": 60,
+        "birth": 4,
+        "underpopulated": 1,
+        "overpopulated": 5,
+        "stable": 3,
+        "space": "3D",
+        "neigh": "VN",
+        "starting": "random",
+        "spawn": []
+    },
+    {
+        "text": "Diffuse Glow",
+        "alwaysAlive": false,
+        "cameraPosition": [300, 300, 100],
+        "lato": 60,
+        "birth": 3,
+        "underpopulated": 1,
+        "overpopulated": 4,
+        "stable": 3,
+        "space": "3D",
+        "neigh": "VN",
+        "starting": "random",
+        "spawn": []
+    },
+    {
+        "text": "Geometric Formation",
+        "alwaysAlive": false,
+        "cameraPosition": [300, 300, 100],
+        "lato": 70,
+        "birth": [2, 5, 7],
+        "underpopulated": 1,
+        "overpopulated": 8,
+        "stable": 4,
+        "space": "3D",
+        "neigh": "M",
+        "starting": "fixed",
+        "spawn": [
+            [35, 35, 35],
+            [36, 35, 35],
+            [35, 36, 35],
+            [35, 35, 36]
+        ]
+    },
+    {
+        "text": "Single Point Replication ",
+        "alwaysAlive": false,
+        "cameraPosition": [300, 300, 100],
+        "lato": 50,
+        "birth": 1,
+        "underpopulated": 1,
+        "overpopulated": 3,
+        "stable": 2,
+        "space": "3D",
+        "neigh": "M",
+        "starting": "fixed",
+        "spawn": [
+            [25, 25, 25]
+        ]
     }
-
-
 ]

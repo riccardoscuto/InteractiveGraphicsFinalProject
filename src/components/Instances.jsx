@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react"
 import * as THREE from "three"
 import { currentPoint } from "../functions/cellularAutomata3D"
-
 export function Instances({ lato, temp = new THREE.Object3D(), Matrix, darkMode, wireframeMode, color }) {
     const instancedMeshRef = useRef()
     useEffect(() => {
@@ -13,7 +12,6 @@ export function Instances({ lato, temp = new THREE.Object3D(), Matrix, darkMode,
             }
             instancedMeshRef.current.setMatrixAt(i, temp.matrix);
         };
-
         instancedMeshRef.current.instanceMatrix.needsUpdate = true
     }, [lato, Matrix])
     return (
@@ -32,4 +30,5 @@ export function Instances({ lato, temp = new THREE.Object3D(), Matrix, darkMode,
 function getPosition(index, lato) {
     index = index + lato ** 3 * 1;
     return [index % lato * 1.5, Math.floor(index / (lato * lato)) * 1.5, Math.floor(index / lato) % lato * 1.5];
+    
 }
