@@ -4,9 +4,9 @@ import { Html } from '@react-three/drei'
 function Loader() {
     return (
         <Html>
-            <div className=''>
-                <div className='' />
-            </div>
+            <h1>
+               Is Loading...
+            </h1>
 
         </Html>
     )
