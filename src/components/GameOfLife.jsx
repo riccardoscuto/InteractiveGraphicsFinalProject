@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import Cube from '../models/Cube';
@@ -12,7 +11,6 @@ export const GameOfLife = ({ darkMode, wireframeMode, setSlideAnim, speed, Runni
     const [Matrix, setMatrix] = useState(generationMatrix(Rule.space, Rule.lato));
     const [Animation, setAnimation] = useState([]);
     const {camera } = useThree();
-    // const [animIndex, setAnimIndex] = useState(0);
     let animation = [];
     let lastIndex = null;
     useEffect(() => {
@@ -137,7 +135,6 @@ export const GameOfLife = ({ darkMode, wireframeMode, setSlideAnim, speed, Runni
                     intensity={darkMode ? 1 : 0}
                 />
             </EffectComposer>
-
         </>
     )
 }
